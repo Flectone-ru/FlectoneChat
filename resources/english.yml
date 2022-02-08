@@ -1,0 +1,74 @@
+
+join:
+  greeting:
+    message: "#4eff52<player>, have a good game"
+
+  message: "<color_main><player> joined the game"
+
+left:
+  message: "<color_main><player> left the game"
+
+chat:
+  no_recipients: "#ff4e4eNobody heard you"
+
+click:
+  message: "<color_text>Actions menu with <player>"
+
+tab_list:
+  header: "☻"
+
+chatcolor:
+  usage: "<color_main>Usage: <color_text>/chatcolor (main color/default) (text color)"
+  succes: "#6cc4ffYou color: <color_main>Main <color_text>Text"
+
+tell:
+  usage: "<color_main>Usage: <color_text>/tell (player) (message)"
+  no_player: "#ff4e4eThe player is not on the server"
+
+  sender:
+    message: "<color_main>✉Message to <player> » "
+
+  receiver:
+    message: "<color_main>✉Message from <player> » "
+
+  you_ignore: "#ff4e4eYou ignore this player"
+  you_ignored: "#ff4e4eYou are ignored by this player"
+
+reply:
+  usage: "<color_main>Usage: <color_text>/r (message)"
+  no_player: "#ff4e4eThe player is not on the server"
+  no_player_answer: "#ff4e4eNo one to answer"
+
+me:
+  usage: "<color_main>Usage: <color_text>/me (message)"
+
+try:
+  usage: "<color_main>Usage: <color_text>/try (message)"
+
+reload:
+  usage: "<color_main>Usage: <color_text>/flectonechat reload"
+  message: "<color_main>Plugin successfully reloaded"
+
+actions:
+  name: "#ffff4eActions with <player>"
+  usage: "<color_main>Usage: <color_text>/actions (player)"
+  no_player: "#ff4e4eThe player is not on the server"
+  head:
+    message: "#ffff4eMessage for <player>"
+    ignore: "#ffff4eUse /ignore <player>"
+  after_message: "#ffff4eWrite a message to the chat for <player>"
+
+ignore:
+  usage: "<color_main>Usage: <color_text>/ignore (player)"
+  myself: "#ff4e4eYou can't ignore yourself"
+  no_player: "#ff4e4eThe player is not on the server"
+  un_mute: "#4eff52You unignore <player>"
+  mute: "#ff4e4eYou ignore <player>"
+
+ignorelist:
+  usage: "<color_main>Usage: <color_text>/ignorelist"
+  empty: "#ff4e4eYou don't ignore anyone"
+  inventory:
+    name: "#ffff4eList of ignored players: "
+    back_arrow: "&fBack"
+    next_arrow: "&fNext"

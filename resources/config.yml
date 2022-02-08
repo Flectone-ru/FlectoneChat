@@ -1,0 +1,63 @@
+language: "english"
+
+join:
+  greeting:
+    message:
+      enable: true
+
+  message:
+    enable: true
+
+left:
+  message:
+    enable: true
+
+world_color:
+  enable: true
+
+  world: "#4eff52"
+  world_nether: "#ff4e4e"
+  world_the_end: "#834eff"
+
+#Default player colors
+color:
+  main: "#6cc4ff"
+  text: "#d9ecef"
+
+chat:
+  global:
+    enable: true
+    condition: "!"
+    format: "<color_main><player>: "
+    prefix: "<color_main>[!] "
+
+    message: "<color_text>"
+
+  local:
+    range: 100
+    format: "<color_main><player>: "
+    prefix: ""
+
+    message: "<color_text>"
+
+player_ping:
+  enable: true
+  condition: "@"
+  color: "<color_main>"
+
+tab_list:
+  header:
+    enable: true
+
+myself_message:
+  enable: true
+
+me:
+  format: "<color_main>* <color_text><player> <message><color_main>*"
+
+try:
+  true:
+    format: "#4eff52* <player> <message>* <chance>%"
+
+  false:
+    format: "#ff4e4e* <player> <message>* <chance>%"

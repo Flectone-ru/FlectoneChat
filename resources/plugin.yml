@@ -1,0 +1,50 @@
+name: FlectoneChat
+version: '${version}'
+main: ru.flectonechat.FlectoneChat
+api-version: 1.18
+authors: [ TheFaser ]
+description: Minecraft plugin
+commands:
+  chatcolor:
+    description: Set custom colors for you
+    usage: /chatcolor <color_main> <color_text>
+
+  tell:
+    description: Custom tell message
+    usage: /tell <player> <message>
+    aliases: [w, msg, message]
+
+  reply:
+    description: Fast tell
+    usage: /r <message>
+    aliases: [r]
+
+  me:
+    description: Custom me
+    usage: /me <message>
+
+  try:
+    description: Rp command
+    usage: /try <message>
+
+  flectonechat:
+    description: Admin command
+    usage: /flectonechat reload
+    permission: flectonechat.reload
+
+  actions:
+    description: GUI menu for players
+    usage: /actions <player>
+    aliases: [ac]
+
+  ignore:
+    description: Ignore bad players
+    usage: /ignore <player>
+
+  ignorelist:
+    description: Ignorelist
+    usage: /ignorelist
+
+permissions:
+  flectonechat.reload:
+    default: op

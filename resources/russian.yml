@@ -1,0 +1,71 @@
+
+join:
+  greeting:
+    message: "#4eff52<player>, приятной игры"
+
+  message: "<color_main><player> присоединился к игре"
+
+left:
+  message: "<color_main><player> покинул игру"
+
+chat:
+  no_recipients: "#ff4e4eВас никто не услышал"
+
+click:
+  message: "#d9ecefМеню действий с <player>"
+
+tab_list:
+  header: "☻"
+
+chatcolor:
+  usage: "<color_main>Использование: /chatcolor (основной цвет/default) (цвет сообщений)"
+  succes: "#6cc4ffТвоц цвет: <color_main>Основной <color_text>Сообщение"
+
+tell:
+  usage: "<color_main>Использование: <color_text>/tell (игрок) (сообщение)"
+  no_player: "#ff4e4eЭтот игрок не на сервере"
+
+  sender:
+    message: "<color_main>✉Сообщение для <player> » "
+
+  receiver:
+    message: "<color_main>✉Сообщение от <player> » "
+
+reply:
+  usage: "<color_main>Использование: <color_text>/r (сообщение)"
+  no_player: "#ff4e4eЭтот игрок не на сервере"
+  no_player_answer: "#ff4e4eНекому отвечать"
+
+me:
+  usage: "<color_main>Использование: <color_text>/me (сообщение)"
+
+try:
+  usage: "<color_main>Использование: <color_text>/try (сообщение)"
+
+reload:
+  usage: "<color_main>Использование: <color_text>/flectonechat reload"
+  message: "<color_main>Плагин успешно перезагружен"
+
+actions:
+  name: "#ffff4eМеню действий с <player>"
+  usage: "<color_main>Использование: <color_text>/actions (игрок)"
+  no_player: "#ff4e4eЭтот игрок не на сервере"
+  head:
+    message: "#ffff4eСообщение для <player>"
+    ignore: "#ffff4eИспользовать /ignore <player>"
+  after_message: "#ffff4eНапиши сообщение для <player>"
+
+ignore:
+  usage: "<color_main>Использование: <color_text>/ignore (игрок)"
+  myself: "#ff4e4eВы не можете замутить себя"
+  no_player: "#ff4e4eЭтот игрок не на сервере"
+  un_mute: "#4eff52Вы замучены у <player>"
+  mute: "#ff4e4eУ вас замучен <player>"
+
+ignorelist:
+  usage: "<color_main>Использование: <color_text>/ignorelist"
+  empty: "#ff4e4eВы никого не игнорируете"
+  inventory:
+    name: "#ffff4eСписок игнорируемых игроков: "
+    back_arrow: "&fПредыдущая"
+    next_arrow: "&fСледующая"
