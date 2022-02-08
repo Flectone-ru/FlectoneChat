@@ -27,6 +27,10 @@ public class ChatSettings implements Listener {
 
         removeRecipientIgnore(event);
 
+        if(enableGlobalChat){
+            globalChat(event);
+        }
+
         localChat(event);
         event.getRecipients().clear();
 
