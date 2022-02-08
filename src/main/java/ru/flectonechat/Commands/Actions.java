@@ -59,7 +59,6 @@ public class Actions implements CommandExecutor {
             flectonePlayer.setActionsInventory(actionsInventory);
         }
 
-        eventPlayer.openInventory(actionsInventory);
         FlectonePlayer flectoneEventPlayer = plugin.allPlayers.get(eventPlayerName);
         flectoneEventPlayer.setLastClickedInventory(actionsInventory, clickedPlayer);
 
