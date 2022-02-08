@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import org.bukkit.inventory.ItemStack;
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.FlectonePlayer;
 import ru.flectonechat.Tools.Utilities;
@@ -44,6 +45,8 @@ public class IgnoreList implements CommandExecutor {
         eventPlayer.openInventory((Inventory) ignoreListInventorys.get(0));
         flectonePlayer.setIgnoreListInventorys(ignoreListInventorys);
 
+
+        ItemStack test;
         return true;
     }
 
