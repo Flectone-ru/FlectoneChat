@@ -45,8 +45,6 @@ public class IgnoreList implements CommandExecutor {
         eventPlayer.openInventory((Inventory) ignoreListInventorys.get(0));
         flectonePlayer.setIgnoreListInventorys(ignoreListInventorys);
 
-
-        ItemStack test;
         return true;
     }
 
