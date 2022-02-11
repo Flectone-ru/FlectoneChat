@@ -12,7 +12,7 @@ commands:
   tell:
     description: Custom tell message
     usage: /tell <player> <message>
-    aliases: [w, msg, message]
+    aliases: [w, msg, message, send]
 
   reply:
     description: Fast tell

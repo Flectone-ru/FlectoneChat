@@ -1,6 +1,5 @@
 package ru.flectonechat.Commands;
 
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,7 +8,10 @@ import org.bukkit.event.Listener;
 
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.FlectonePlayer;
-import ru.flectonechat.Tools.Utilities;
+import ru.flectonechat.Tools.Utils.UtilsCommand;
+import ru.flectonechat.Tools.Utils.UtilsMain;
+import ru.flectonechat.Tools.Utils.UtilsMessage;
+import ru.flectonechat.Tools.Utils.UtilsTell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +20,8 @@ public class Chatcolor implements Listener, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player eventPlayer = (Player) sender;
-        if(Utilities.checkArgsCommand(args, 1)){
-            Utilities.sendErrorMessage(eventPlayer, "chatcolor.usage");
+        if(UtilsCommand.checkArgs(args, 1)){
+            UtilsTell.sendErrorMessage(eventPlayer, "chatcolor.usage");
             return true;
         }
 
@@ -29,14 +31,14 @@ public class Chatcolor implements Listener, CommandExecutor {
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(sender.getName());
 
         if(themeOne.equals("default")){
-            themesList = Utilities.createDefaultThemes(themesList);
+            themesList = UtilsMain.createDefaultThemes();
             flectonePlayer.setThemesList(themesList);
             sendSuccesMessage(eventPlayer);
             return true;
         }
 
-        if(Utilities.checkArgsCommand(args, 2)){
-            Utilities.sendErrorMessage(eventPlayer, "chatcolor.usage");
+        if(UtilsCommand.checkArgs(args, 2)){
+            UtilsTell.sendErrorMessage(eventPlayer, "chatcolor.usage");
             return true;
         }
 
@@ -57,16 +59,14 @@ public class Chatcolor implements Listener, CommandExecutor {
 
     private boolean checkCorrectThemes(String theme, Player player){
         if(!theme.contains("#") && !theme.contains("&")){
-            Utilities.sendErrorMessage(player, "chatcolor.usage");
+            UtilsTell.sendErrorMessage(player, "chatcolor.usage");
             return true;
         }
         return false;
     }
 
     private void sendSuccesMessage(Player player){
-        String succesMessage = Utilities.getLanguageString("chatcolor.succes");
-        succesMessage = Utilities.setPlayerColors(succesMessage, player.getName());
-
-        player.spigot().sendMessage(TextComponent.fromLegacyText(succesMessage));
+        String succesMessage = UtilsMessage.defaultLanguageString("chatcolor.succes", player.getName());
+        UtilsTell.spigotMessage(player, succesMessage);
     }
 }

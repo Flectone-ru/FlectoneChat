@@ -1,53 +1,50 @@
 package ru.flectonechat.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.FlectonePlayer;
-import ru.flectonechat.Tools.Utilities;
+import ru.flectonechat.Tools.Utils.*;
 
 public class Actions implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player eventPlayer = (Player) sender;
         String eventPlayerName = eventPlayer.getName();
-        if(Utilities.checkArgsCommand(args, 1)){
-            Utilities.sendErrorMessage(eventPlayer, "actions.usage");
+
+        if(UtilsCommand.checkArgs(args, 1)){
+            UtilsTell.sendErrorMessage(eventPlayer, "actions.usage");
             return true;
         }
 
-        Player clickedPlayer = Utilities.checkPlayerOnServer(args[0]);
+        Player clickedPlayer = UtilsMain.checkPlayerOnServer(args[0]);
         if(clickedPlayer == null){
-            Utilities.sendErrorMessage(eventPlayer, "actions.no_player");
+            UtilsTell.sendErrorMessage(eventPlayer, "actions.no_player");
             return true;
         }
 
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(clickedPlayer.getName());
 
-        org.bukkit.inventory.Inventory actionsInventory = flectonePlayer.getActionsInventory();
+        Inventory actionsInventory = flectonePlayer.getActionsInventory();
 
         if(actionsInventory == null){
-            String inventoryName = Utilities.getLanguageString("actions.name");
-            inventoryName = Utilities.formatString(inventoryName).replace("<player>", clickedPlayer.getName());
+            String clickedPlayerName = clickedPlayer.getName();
 
-            String headIgnore = Utilities.getLanguageString("actions.head.ignore");
-            headIgnore = Utilities.formatString(headIgnore).replace("<player>", args[0]);
-
-            String headMessage = Utilities.getLanguageString("actions.head.message");
-            headMessage = Utilities.formatString(headMessage).replace("<player>", args[0]);
+            String inventoryName = UtilsMessage.defaultLanguageString("actions.name", clickedPlayerName);
+            String headIgnore = UtilsMessage.defaultLanguageString("actions.head.ignore", clickedPlayerName);
+            String headMessage = UtilsMessage.defaultLanguageString("actions.head.message", clickedPlayerName);
 
             actionsInventory = Bukkit.createInventory(null, 9*3, inventoryName);
 
-            ItemStack headForIgnore = Utilities.createHeadInventory(headIgnore, clickedPlayer.getName());
-            ItemStack headForMessage = Utilities.createHeadInventory(headMessage, "ElMarcosFTW");
+            ItemStack headForIgnore = UtilsGUI.createHeadInventory(headIgnore, clickedPlayerName);
+            ItemStack headForMessage = UtilsGUI.createHeadInventory(headMessage, "ElMarcosFTW");
 
             if(clickedPlayer.getName().equals(eventPlayerName)){
                 actionsInventory.setItem(13, headForMessage);

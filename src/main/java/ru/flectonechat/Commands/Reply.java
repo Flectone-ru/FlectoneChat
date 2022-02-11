@@ -7,7 +7,10 @@ import org.bukkit.entity.Player;
 
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.FlectonePlayer;
-import ru.flectonechat.Tools.Utilities;
+import ru.flectonechat.Tools.Utils.UtilsCommand;
+import ru.flectonechat.Tools.Utils.UtilsMain;
+import ru.flectonechat.Tools.Utils.UtilsMessage;
+import ru.flectonechat.Tools.Utils.UtilsTell;
 
 public class Reply implements CommandExecutor {
     @Override
@@ -15,8 +18,8 @@ public class Reply implements CommandExecutor {
         Player eventPlayer = (Player) sender;
         String eventPlayerName = eventPlayer.getName();
 
-        if(Utilities.checkArgsCommand(args, 1)){
-            Utilities.sendErrorMessage(eventPlayer, "reply.usage");
+        if(UtilsCommand.checkArgs(args, 1)){
+            UtilsTell.sendErrorMessage(eventPlayer, "reply.usage");
             return true;
         }
 
@@ -25,23 +28,22 @@ public class Reply implements CommandExecutor {
         String lastSender = flectonePlayer.getLastSender();
 
         if(lastSender == null){
-            Utilities.sendErrorMessage(eventPlayer, "reply.no_player_answer");
+            UtilsTell.sendErrorMessage(eventPlayer, "reply.no_player_answer");
             return true;
         }
-        Player receiver = Utilities.checkPlayerOnServer(lastSender);
+        Player receiver = UtilsMain.checkPlayerOnServer(lastSender);
         if(receiver == null){
-            Utilities.sendErrorMessage(eventPlayer, "reply.no_player");
+            UtilsTell.sendErrorMessage(eventPlayer, "reply.no_player");
             return true;
         }
 
-        String message = Utilities.createMessageFromArgs(args, 0, "<color_text>");
+        String message = UtilsMessage.createMessageFromArgs(args, 0, "<color_text>");
 
-        if(Utilities.useCommandTell(message, eventPlayer, receiver, "sender")){
+        if(UtilsTell.useCommandTell(message, eventPlayer, receiver, "sender")){
             return true;
         }
-        if(Utilities.useCommandTell(message, receiver, eventPlayer, "receiver")){
-            return true;
-        }
+
+        UtilsTell.useCommandTell(message, receiver, eventPlayer, "receiver");
 
         return true;
     }

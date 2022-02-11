@@ -24,6 +24,9 @@ chatcolor:
 tell:
   usage: "<color_main>Использование: <color_text>/tell (игрок) (сообщение)"
   no_player: "#ff4e4eЭтот игрок не на сервере"
+  myself:
+    true: "<color_main>✉Заметка » "
+    false: "#ff4e4eВы не можете писать самому себе"
 
   sender:
     message: "<color_main>✉Сообщение для <player> » "

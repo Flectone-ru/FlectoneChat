@@ -25,6 +25,10 @@ tell:
   usage: "<color_main>Usage: <color_text>/tell (player) (message)"
   no_player: "#ff4e4eThe player is not on the server"
 
+  myself:
+    true: "<color_main>✉Note » "
+    false: "#ff4e4eYou cannot write to yourself"
+
   sender:
     message: "<color_main>✉Message to <player> » "
 

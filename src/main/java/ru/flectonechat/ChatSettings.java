@@ -7,8 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import ru.flectonechat.Tools.FlectonePlayer;
-import ru.flectonechat.Tools.Utilities;
+import ru.flectonechat.Tools.Utils.UtilsMain;
+import ru.flectonechat.Tools.Utils.UtilsMessage;
+import ru.flectonechat.Tools.Utils.UtilsTell;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,12 +19,12 @@ public class ChatSettings implements Listener {
     @EventHandler
     public void Chat(AsyncPlayerChatEvent event){
 
-        if(checkAfterMessage(event.getPlayer(), event.getMessage().split(" "))){
+        if(UtilsMessage.checkAfterMessage(event.getPlayer(), event.getMessage().split(" "))){
             event.setCancelled(true);
             return;
         }
 
-        boolean enableGlobalChat = Utilities.getConfigBoolean("chat.global.enable");
+        boolean enableGlobalChat = UtilsMain.getConfigBoolean("chat.global.enable");
 
         removeRecipientIgnore(event);
 
@@ -38,7 +39,6 @@ public class ChatSettings implements Listener {
 
     private static void removeRecipientIgnore(AsyncPlayerChatEvent event){
         FlectoneChat plugin = FlectoneChat.getInstance();
-        FlectonePlayer flectonePlayer = plugin.allPlayers.get(event.getPlayer().getName());
         for(Player player : new HashSet<>(event.getRecipients())){
             List<String> recipientIgnoreList = plugin.allPlayers.get(player.getName()).getIgnoreList();
 
@@ -49,7 +49,7 @@ public class ChatSettings implements Listener {
     }
 
     private void globalChat(AsyncPlayerChatEvent event){
-        String condition = Utilities.getConfigString("chat.global.condition");
+        String condition = UtilsMain.getConfigString("chat.global.condition");
         String eventMessage = event.getMessage();
 
         if(eventMessage.startsWith(condition)){
@@ -73,7 +73,7 @@ public class ChatSettings implements Listener {
         Player eventPlayer = event.getPlayer();
 
         for (Player player : new HashSet<>(event.getRecipients())) {
-            int range = Utilities.getConfigInt("chat.local.range");
+            int range = UtilsMain.getConfigInt("chat.local.range");
 
             if(!playerInRange(player.getLocation(), eventPlayer.getLocation(), range)) {
                 event.getRecipients().remove(player);
@@ -95,8 +95,8 @@ public class ChatSettings implements Listener {
         //send message
         for(Player player : new HashSet<>(event.getRecipients())){
 
-            String messageColor = Utilities.getConfigString("chat." + chatFormat + ".message");
-            messageColor = Utilities.setPlayerColors(messageColor, player.getName());
+            String messageColor = UtilsMain.getConfigString("chat." + chatFormat + ".message");
+            messageColor = UtilsMessage.setPlayerColors(messageColor, player.getName());
 
             ComponentBuilder messageBuilder = new ComponentBuilder();
 
@@ -104,34 +104,35 @@ public class ChatSettings implements Listener {
             for(String message : eventMessage.split(" ")){
 
                 message = messageColor + message;
-                TextComponent messageComponent = Utilities.searchPingMessage(message, eventPlayer, player);
+                TextComponent messageComponent = UtilsMessage.searchPingMessage(message, eventPlayer, player);
 
                 messageBuilder.append(messageComponent, ComponentBuilder.FormatRetention.NONE).append(" ");
             }
 
             ComponentBuilder formatMessageBuilder = new ComponentBuilder();
 
-            String clickMessage = Utilities.getLanguageString("click.message");
-            clickMessage = Utilities.setPlayerColors(clickMessage, player.getName())
-                    .replace("<player>", eventPlayerName);
+            String clickMessage = UtilsMain.getLanguageString("click.message");
+            clickMessage = UtilsMessage.setPlayerColors(clickMessage, player.getName());
+            clickMessage = UtilsMessage.replacePlayerName(clickMessage, eventPlayerName);
 
             //set format
-            String formatMessage = Utilities.getConfigString("chat." + chatFormat + ".format");
-            formatMessage = Utilities.setPlayerColors(formatMessage, player.getName())
-                    .replace("<player>", eventPlayer.getName());
+            String formatMessage = UtilsMain.getConfigString("chat." + chatFormat + ".format");
+            formatMessage = UtilsMessage.setPlayerColors(formatMessage, player.getName());
+            formatMessage = UtilsMessage.replacePlayerName(formatMessage, eventPlayerName);
 
-            String formatPrefix = Utilities.getConfigString("chat." + chatFormat + ".prefix");
-            formatPrefix = Utilities.setPlayerColors(formatPrefix, player.getName());
+            String formatPrefix = UtilsMain.getConfigString("chat." + chatFormat + ".prefix");
+            formatPrefix = UtilsMessage.setPlayerColors(formatPrefix, player.getName());
 
             formatMessage = formatPrefix + formatMessage;
 
             TextComponent formatMessageComponent = new TextComponent(TextComponent.fromLegacyText(formatMessage));
 
             //set click event
-            Utilities.setClickEvent("/actions " + eventPlayer.getName(), clickMessage, formatMessageComponent, eventPlayer, player);
+            UtilsMessage.setClickEvent("/actions " + eventPlayer.getName(), clickMessage, formatMessageComponent, eventPlayer, player);
 
             formatMessageBuilder.append(formatMessageComponent);
             formatMessageBuilder.append(messageBuilder.create(), ComponentBuilder.FormatRetention.NONE);
+
             player.spigot().sendMessage(formatMessageBuilder.create());
         }
 
@@ -149,33 +150,11 @@ public class ChatSettings implements Listener {
 
     private void checkRecipient(Integer recipientSize, Player player){
         if(recipientSize == 1) {
-            String noRecipients = Utilities.getLanguageString("chat.no_recipients");
-            noRecipients = Utilities.formatString(noRecipients);
+            String noRecipients = UtilsMain.getLanguageString("chat.no_recipients");
+            noRecipients = UtilsMain.formatString(noRecipients);
 
-            player.spigot().sendMessage(TextComponent.fromLegacyText(noRecipients));
+            UtilsTell.spigotMessage(player, noRecipients);
         }
-    }
-
-    private boolean checkAfterMessage(Player eventPlayer, String[] args){
-        FlectoneChat plugin = FlectoneChat.getInstance();
-        FlectonePlayer flectonePlayer = plugin.allPlayers.get(eventPlayer.getName());
-        if(!flectonePlayer.getAfterMessage().equals("not")){
-
-            String message = Utilities.createMessageFromArgs(args, 0, "<color_text>");
-
-            Player player = Utilities.checkPlayerOnServer(flectonePlayer.getAfterMessage());
-
-            flectonePlayer.setAfterMessage("not");
-
-            if(player == null){
-                Utilities.sendErrorMessage(eventPlayer, "actions.no_player");
-                return true;
-            }
-            Utilities.useCommandTell(message, eventPlayer, player, "sender");
-            Utilities.useCommandTell(message, player, eventPlayer, "receiver");
-            return true;
-        }
-        return false;
     }
 
 }

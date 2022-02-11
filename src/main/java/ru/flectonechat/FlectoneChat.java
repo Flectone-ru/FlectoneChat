@@ -12,7 +12,7 @@ import ru.flectonechat.Tools.OnTabCompleter;
 import ru.flectonechat.PlayerActions.WorldChange;
 import ru.flectonechat.PlayerActions.JoinAndLeft;
 import ru.flectonechat.Tools.FlectonePlayer;
-import ru.flectonechat.Tools.Utilities;
+import ru.flectonechat.Tools.Utils.UtilsMain;
 
 import java.io.File;
 import java.util.Arrays;
@@ -106,9 +106,11 @@ public final class FlectoneChat extends JavaPlugin {
     }
 
     public void loadLanguage(){
-        List<String> defaultLangFiles = Arrays.asList("english", "russian");
+        List<String> defaultLangFiles = Arrays.asList("en_US", "ru_RU");
 
-        for(String lang : defaultLangFiles) createFile(lang);
+        for(String lang : defaultLangFiles){
+            createFile(lang);
+        }
 
         String getLanguageName = getConfig().getString("language");
 
@@ -117,7 +119,7 @@ public final class FlectoneChat extends JavaPlugin {
             getLogger().info("Loaded " + getLanguageName + " language");
 
         } catch (Exception event){
-            language = YamlConfiguration.loadConfiguration(createFile("english"));
+            language = YamlConfiguration.loadConfiguration(createFile("en_US"));
             getLogger().warning("Failed to load " + getLanguageName + " language");
             getLogger().warning("Loaded default english language...");
         }
@@ -132,7 +134,7 @@ public final class FlectoneChat extends JavaPlugin {
 
     public void createFlectonePlayers(){
         for(Player player : Bukkit.getOnlinePlayers()){
-            Utilities.createFlectonePlayer(player);
+            UtilsMain.createFlectonePlayer(player);
         }
     }
 }

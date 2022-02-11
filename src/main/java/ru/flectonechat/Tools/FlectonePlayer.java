@@ -5,6 +5,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import ru.flectonechat.FlectoneChat;
+import ru.flectonechat.Tools.Utils.UtilsMain;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,12 +67,12 @@ public class FlectonePlayer {
     }
 
     public void setWorldColor(World world){
-        if(Utilities.getConfigBoolean("world_color.enable")){
+        if(UtilsMain.getConfigBoolean("world_color.enable")){
             String eventWorldName = world.getName();
-            String worldColor = Utilities.getConfigString("world_color." + eventWorldName);
+            String worldColor = UtilsMain.getConfigString("world_color." + eventWorldName);
 
             worldColor = worldColor + player.getName();
-            worldColor = Utilities.formatString(worldColor);
+            worldColor = UtilsMain.formatString(worldColor);
 
             player.setPlayerListName(worldColor);
         }

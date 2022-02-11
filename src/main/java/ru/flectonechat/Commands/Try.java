@@ -5,7 +5,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import ru.flectonechat.Tools.Utilities;
+import ru.flectonechat.Tools.Utils.UtilsCommand;
+import ru.flectonechat.Tools.Utils.UtilsMain;
+import ru.flectonechat.Tools.Utils.UtilsMessage;
+import ru.flectonechat.Tools.Utils.UtilsTell;
 
 import java.util.Random;
 
@@ -13,8 +16,8 @@ public class Try implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player eventPlayer = (Player) sender;
-        if(Utilities.checkArgsCommand(args, 1)){
-            Utilities.sendErrorMessage(eventPlayer, "try.usage");
+        if(UtilsCommand.checkArgs(args, 1)){
+            UtilsTell.sendErrorMessage(eventPlayer, "try.usage");
             return true;
         }
 
@@ -23,17 +26,14 @@ public class Try implements CommandExecutor {
         String intRandomString = String.valueOf(intRandom);
 
         String getTryResult = String.valueOf(checkTry(intRandom));
-        String formatMessage = Utilities.getConfigString("try." + getTryResult + ".format");
-        String message = Utilities.createMessageFromArgs(args, 0, "");
+        String formatMessage = UtilsMain.getConfigString("try." + getTryResult + ".format");
+        formatMessage = UtilsMain.formatString(formatMessage);
+        formatMessage = UtilsMessage.replacePlayerName(formatMessage, eventPlayer.getName());
 
-        formatMessage = formatMessage
-                .replace("<message>", message)
-                .replace("<player>", eventPlayer.getName())
-                .replace("<chance>", intRandomString);
+        String message = UtilsMessage.createMessageFromArgs(args, 0, "");
+        formatMessage = formatMessage.replace("<message>", message).replace("<chance>", intRandomString);
 
-        Utilities.sendEveryoneMessage(formatMessage, eventPlayer);
-
-
+        UtilsTell.sendEveryoneMessage(formatMessage, eventPlayer);
         return true;
     }
 
