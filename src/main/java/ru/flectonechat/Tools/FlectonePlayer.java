@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.Utils.UtilsMain;
+import ru.flectonechat.Tools.Utils.UtilsMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,30 +14,36 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FlectonePlayer {
+    //get plugin
     FlectoneChat plugin = FlectoneChat.getInstance();
-
+    //this player
     private Player player;
-
+    //who is a player
+    private Player whoPlayer;
+    //last sender for player
     private String lastSender;
+    //this player uuid
     private String playerUUID;
+    //after message for player
     private String afterMessage = "not";
 
+    //ignore list from player
     private List<String> ignoreList = new ArrayList<>();
+    //themes list from player
     private List<String> themesList;
 
+    //inventory when player use /actions
     private Inventory actionsInventory = null;
+    //last clicked inventory
     private Inventory lastClickedInventory = null;
 
-    private HashMap<Integer, Inventory> ignoreListInventorys = new HashMap<>();
-
-    private Player whoPlayer;
+    //hashmap contains all inventory which creates due to /ignorelist
+    private HashMap<Integer, Inventory> ignoreListInventories = new HashMap<>();
 
     public void setPlayer(Player player) {
         this.player = player;
 
         this.playerUUID = player.getUniqueId().toString();
-
-
     }
 
     public Player getPlayer() {
@@ -62,18 +69,20 @@ public class FlectonePlayer {
         try {
             plugin.ignoreFileConfig.save(plugin.ignoreFile);
         } catch (IOException e){
-
+            plugin.getLogger().warning("Error save ignoreFile");
         }
     }
 
     public void setWorldColor(World world){
-        if(UtilsMain.getConfigBoolean("world_color.enable")){
+        //get boolean
+        if(UtilsMain.getConfigBoolean("world-color.enable")){
+            //get player name
             String eventWorldName = world.getName();
-            String worldColor = UtilsMain.getConfigString("world_color." + eventWorldName);
-
+            //get color
+            String worldColor = UtilsMain.getConfigString("world-color." + eventWorldName);
+            //set color
             worldColor = worldColor + player.getName();
-            worldColor = UtilsMain.formatString(worldColor);
-
+            worldColor = UtilsMessage.formatString(worldColor);
             player.setPlayerListName(worldColor);
         }
     }
@@ -85,7 +94,7 @@ public class FlectonePlayer {
         try {
             plugin.themesFileConfig.save(plugin.themesFile);
         } catch (IOException e){
-
+            plugin.getLogger().warning("Error save themesFile");
         }
 
     }
@@ -127,11 +136,11 @@ public class FlectonePlayer {
         return plugin.ignoreFileConfig.getStringList(playerUUID);
     }
 
-    public void setIgnoreListInventorys(HashMap<Integer, Inventory> ignoreListInventorys) {
-        this.ignoreListInventorys = ignoreListInventorys;
+    public void setIgnoreListInventories(HashMap<Integer, Inventory> ignoreListInventories) {
+        this.ignoreListInventories = ignoreListInventories;
     }
 
-    public HashMap<Integer, Inventory> getIgnoreListInventorys() {
-        return ignoreListInventorys;
+    public HashMap<Integer, Inventory> getIgnoreListInventories() {
+        return ignoreListInventories;
     }
 }

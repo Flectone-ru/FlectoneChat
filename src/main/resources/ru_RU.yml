@@ -1,4 +1,6 @@
 
+server-motd-message: "#6cc4ffЭто тестовое сообщение из FlectoneChat"
+
 join:
   greeting:
     message: "#4eff52<player>, приятной игры"
@@ -9,21 +11,22 @@ left:
   message: "<color_main><player> покинул игру"
 
 chat:
-  no_recipients: "#ff4e4eВас никто не услышал"
+  no-recipients: "#ff4e4eВас никто не услышал"
 
 click:
   message: "#d9ecefМеню действий с <player>"
 
-tab_list:
-  header: "☻"
+tab-list:
+  header: "\n☻\n"
 
 chatcolor:
   usage: "<color_main>Использование: /chatcolor (основной цвет/default) (цвет сообщений)"
-  succes: "#6cc4ffТвоц цвет: <color_main>Основной <color_text>Сообщение"
+  success: "#6cc4ffТвоц цвет: <color_main>Основной <color_text>Сообщение"
 
 tell:
   usage: "<color_main>Использование: <color_text>/tell (игрок) (сообщение)"
-  no_player: "#ff4e4eЭтот игрок не на сервере"
+  no-player: "#ff4e4eЭтот игрок не на сервере"
+
   myself:
     true: "<color_main>✉Заметка » "
     false: "#ff4e4eВы не можете писать самому себе"
@@ -34,10 +37,13 @@ tell:
   receiver:
     message: "<color_main>✉Сообщение от <player> » "
 
+  you-ignore: "#ff4e4eВы игнорируете этого игрока"
+  you-ignored: "#ff4e4eВас игнорирует этот игрок"
+
 reply:
   usage: "<color_main>Использование: <color_text>/r (сообщение)"
-  no_player: "#ff4e4eЭтот игрок не на сервере"
-  no_player_answer: "#ff4e4eНекому отвечать"
+  no-player: "#ff4e4eЭтот игрок не на сервере"
+  no-player-answer: "#ff4e4eНекому отвечать"
 
 me:
   usage: "<color_main>Использование: <color_text>/me (сообщение)"
@@ -45,30 +51,31 @@ me:
 try:
   usage: "<color_main>Использование: <color_text>/try (сообщение)"
 
-reload:
-  usage: "<color_main>Использование: <color_text>/flectonechat reload"
-  message: "<color_main>Плагин успешно перезагружен"
+flectonechat:
+  usage: "<color_main>Использование: <color_text>/flectonechat reload/config/language"
+  not-exists: "#ff4e4eУкажите правильное название строки"
+  message: "<color_main>Плагин успешно перезагружен!"
 
 actions:
   name: "#ffff4eМеню действий с <player>"
   usage: "<color_main>Использование: <color_text>/actions (игрок)"
-  no_player: "#ff4e4eЭтот игрок не на сервере"
+  no-player: "#ff4e4eЭтот игрок не на сервере"
   head:
     message: "#ffff4eСообщение для <player>"
     ignore: "#ffff4eИспользовать /ignore <player>"
-  after_message: "#ffff4eНапиши сообщение для <player>"
+  after-message: "#ffff4eНапиши сообщение для <player>"
 
 ignore:
   usage: "<color_main>Использование: <color_text>/ignore (игрок)"
   myself: "#ff4e4eВы не можете замутить себя"
-  no_player: "#ff4e4eЭтот игрок не на сервере"
-  un_mute: "#4eff52Вы замучены у <player>"
-  mute: "#ff4e4eУ вас замучен <player>"
+  no-player: "#ff4e4eЭтот игрок не на сервере"
+  un-mute: "#4eff52Вы размутили у <player>"
+  mute: "#ff4e4eВы замутили <player>"
 
 ignorelist:
   usage: "<color_main>Использование: <color_text>/ignorelist"
   empty: "#ff4e4eВы никого не игнорируете"
   inventory:
     name: "#ffff4eСписок игнорируемых игроков: "
-    back_arrow: "&fПредыдущая"
-    next_arrow: "&fСледующая"
+    back-arrow: "&fПредыдущая"
+    next-arrow: "&fСледующая"

@@ -1,4 +1,13 @@
 language: "en_US"
+test: "test"
+
+server:
+  motd:
+    enable: true
+
+  online:
+    enable: true
+    number: 1
 
 join:
   greeting:
@@ -12,7 +21,7 @@ left:
   message:
     enable: true
 
-world_color:
+world-color:
   enable: true
 
   world: "#4eff52"
@@ -45,11 +54,11 @@ player_ping:
   condition: "@"
   color: "<color_main>"
 
-tab_list:
+tab-list:
   header:
     enable: true
 
-myself_message:
+myself-message:
   enable: true
 
 me:

@@ -19,56 +19,64 @@ public class JoinAndLeft implements Listener {
 
     @EventHandler
     public void PlayerJoin(PlayerJoinEvent event){
-
+        //event player
         Player eventPlayer = event.getPlayer();
-
+        //create flectone player for player
         UtilsMain.createFlectonePlayer(eventPlayer);
-
-        checkTabListHeader(eventPlayer, "tab_list.header");
-
+        //set tab list header
+        checkTabListHeader(eventPlayer);
+        //set join message
         if(UtilsMain.getConfigBoolean("join.message.enable")){
+            //message for console
             plugin.getLogger().info(event.getJoinMessage());
             event.setJoinMessage("");
-
-            setMessage("join.message", eventPlayer.getName());
+            //send message
+            sendMessage("join.message", eventPlayer.getName());
         }
-
+        //set greeting message
         if(UtilsMain.getConfigBoolean("join.greeting.message.enable")){
+            //get greeting message
             String message = UtilsMessage.defaultLanguageString("join.greeting.message", eventPlayer.getName());
-            UtilsTell.spigotMessage(eventPlayer, message);
+            //send message
+            UtilsTell.sendMessage(eventPlayer, message);
         }
-
     }
 
     @EventHandler
     public void PlayerLeft(PlayerQuitEvent event){
+        //event player
         Player eventPlayer = event.getPlayer();
-
+        //set left message
         if(UtilsMain.getConfigBoolean("left.message.enable")){
+            //message for console
             plugin.getLogger().info(event.getQuitMessage());
             event.setQuitMessage("");
-
-            setMessage("left.message", eventPlayer.getName());
+            //send message
+            sendMessage("left.message", eventPlayer.getName());
         }
-
+        //remove flectone player for player
         plugin.allPlayers.remove(eventPlayer.getName());
     }
-
-    private static void checkTabListHeader(Player player, String booleanName){
-        if(UtilsMain.getConfigBoolean(booleanName + ".enable")){
-            String tabListHeader = UtilsMain.getLanguageString(booleanName);
+    //check and set tab list header
+    private static void checkTabListHeader(Player player){
+        //get boolean
+        if(UtilsMain.getConfigBoolean("tab-list.header" + ".enable")){
+            //get string
+            String tabListHeader = UtilsMain.getLanguageString("tab-list.header");
             tabListHeader = UtilsMessage.setPlayerColors(tabListHeader, player.getName());
-
+            //set header
             player.setPlayerListHeader(tabListHeader);
         }
     }
-
-    private static void setMessage(String stringName, String eventPlayerName){
+    //send message
+    private static void sendMessage(String stringName, String eventPlayerName){
         for(Player player : Bukkit.getOnlinePlayers()){
+            //set color for this player
             String message = UtilsMain.getLanguageString(stringName);
             message = UtilsMessage.replacePlayerName(message, eventPlayerName);
             message = UtilsMessage.setPlayerColors(message, player.getName());
-            UtilsTell.spigotMessage(player, message);
+            //send message
+            UtilsTell.sendMessage(player, message);
         }
     }
 

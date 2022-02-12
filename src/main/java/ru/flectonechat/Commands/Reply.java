@@ -1,5 +1,6 @@
 package ru.flectonechat.Commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,43 +9,44 @@ import org.bukkit.entity.Player;
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.FlectonePlayer;
 import ru.flectonechat.Tools.Utils.UtilsCommand;
-import ru.flectonechat.Tools.Utils.UtilsMain;
 import ru.flectonechat.Tools.Utils.UtilsMessage;
 import ru.flectonechat.Tools.Utils.UtilsTell;
 
 public class Reply implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        //command: /r (message)
         Player eventPlayer = (Player) sender;
         String eventPlayerName = eventPlayer.getName();
-
+        //checking for args
         if(UtilsCommand.checkArgs(args, 1)){
-            UtilsTell.sendErrorMessage(eventPlayer, "reply.usage");
+            UtilsTell.sendMessageLanguage(eventPlayer, "reply.usage");
             return true;
         }
-
+        //get flectone player and his last sender
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(eventPlayerName);
-        String lastSender = flectonePlayer.getLastSender();
-
+        String lastSenderName = flectonePlayer.getLastSender();
+        //if event player does not have last sender
+        if(lastSenderName == null){
+            UtilsTell.sendMessageLanguage(eventPlayer, "reply.no-player-answer");
+            return true;
+        }
+        //get player from name
+        Player lastSender = Bukkit.getPlayer(lastSenderName);
+        //if last sender left the game
         if(lastSender == null){
-            UtilsTell.sendErrorMessage(eventPlayer, "reply.no_player_answer");
+            UtilsTell.sendMessageLanguage(eventPlayer, "reply.no-player");
             return true;
         }
-        Player receiver = UtilsMain.checkPlayerOnServer(lastSender);
-        if(receiver == null){
-            UtilsTell.sendErrorMessage(eventPlayer, "reply.no_player");
-            return true;
-        }
-
+        //create message from args and add color for word
         String message = UtilsMessage.createMessageFromArgs(args, 0, "<color_text>");
-
-        if(UtilsTell.useCommandTell(message, eventPlayer, receiver, "sender")){
+        //send message for event player
+        if(UtilsTell.useCommandTell(message, eventPlayer, lastSender, "sender")){
             return true;
         }
-
-        UtilsTell.useCommandTell(message, receiver, eventPlayer, "receiver");
-
+        //send message for last sender
+        UtilsTell.useCommandTell(message, lastSender, eventPlayer, "receiver");
         return true;
     }
 }

@@ -13,20 +13,24 @@ import ru.flectonechat.Tools.Utils.UtilsTell;
 public class Me implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        //command: /me (message)
         Player eventPlayer = (Player) sender;
+        //checking for args
         if(UtilsCommand.checkArgs(args, 1)){
-            UtilsTell.sendErrorMessage(eventPlayer, "me.usage");
+            UtilsTell.sendMessageLanguage(eventPlayer, "me.usage");
             return true;
         }
+        //get format from config
         String formatMessage = UtilsMain.getConfigString("me.format");
-        formatMessage = UtilsMain.formatString(formatMessage);
+        formatMessage = UtilsMessage.formatString(formatMessage);
+        //replace placeholder <player>
         formatMessage = UtilsMessage.replacePlayerName(formatMessage, eventPlayer.getName());
+        //create message from args and add color for word
         String message = UtilsMessage.createMessageFromArgs(args, 0, "");
-
+        //replace placeholder <message>
         formatMessage = formatMessage.replace("<message>", message);
-
+        //send message for everyone
         UtilsTell.sendEveryoneMessage(formatMessage, eventPlayer);
-
         return true;
     }
 }

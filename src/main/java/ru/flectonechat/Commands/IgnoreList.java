@@ -19,30 +19,32 @@ public class IgnoreList implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        //comand: /ignorelist
         Player eventPlayer = (Player) sender;
         String eventPlayerName = eventPlayer.getName();
+        //checking for args but this if impossible
         if(UtilsCommand.checkArgs(args, 0)){
-            UtilsTell.sendErrorMessage(eventPlayer, "ignorelist.usage");
+            UtilsTell.sendMessageLanguage(eventPlayer, "ignorelist.usage");
             return true;
         }
+        //get flectone player and he ignore list
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(eventPlayerName);
-
         List<String> ignoreList = plugin.ignoreFileConfig.getStringList(flectonePlayer.getPlayerUUID());
-
+        //if player is not ignoring anyone
         if(ignoreList.size() == 0){
-            UtilsTell.sendErrorMessage(eventPlayer, "ignorelist.empty");
+            UtilsTell.sendMessageLanguage(eventPlayer, "ignorelist.empty");
             return true;
         }
-
-        HashMap ignoreListInventorys = flectonePlayer.getIgnoreListInventorys();
-
-        UtilsGUI.setIgnoreListInventory(flectonePlayer, ignoreListInventorys, false);
-
-        ignoreListInventorys = flectonePlayer.getIgnoreListInventorys();
-        eventPlayer.openInventory((Inventory) ignoreListInventorys.get(0));
-        flectonePlayer.setIgnoreListInventorys(ignoreListInventorys);
-
+        //get flectone player hashmap with all inventories for ignore
+        HashMap<Integer, Inventory> ignoreListInventories = flectonePlayer.getIgnoreListInventories();
+        //create menu for command
+        UtilsGUI.setIgnoreListInventory(flectonePlayer, ignoreListInventories, false);
+        //again get
+        ignoreListInventories = flectonePlayer.getIgnoreListInventories();
+        //open and save
+        eventPlayer.openInventory(ignoreListInventories.get(0));
+        flectonePlayer.setIgnoreListInventories(ignoreListInventories);
         return true;
     }
 
