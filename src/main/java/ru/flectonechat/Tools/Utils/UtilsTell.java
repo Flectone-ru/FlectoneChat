@@ -52,6 +52,8 @@ public class UtilsTell {
         String formatString = UtilsMain.getLanguageString("tell." + whomMessage + ".message");
         formatString = UtilsMessage.setPlayerColors(formatString, eventPlayerName);
         formatString = UtilsMessage.replacePlayerName(formatString, receiverName);
+        //replace placeholder <prefix> and <suffix>
+        formatString = UtilsMessage.replaceVaultPlaceholders(formatString, eventPlayer);
         //get click message
         String clickMessage = UtilsMain.getLanguageString("click.message");
         clickMessage = UtilsMessage.setPlayerColors(clickMessage, eventPlayerName);

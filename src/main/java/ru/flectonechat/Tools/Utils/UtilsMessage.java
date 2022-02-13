@@ -164,4 +164,16 @@ public class UtilsMessage {
         }
         return ChatColor.translateAlternateColorCodes('&', string);
     }
+    //replace placeholder <suffix> and <prefix>
+    public static String replaceVaultPlaceholders(String message, Player player){
+        //get flectone player
+        FlectoneChat plugin = FlectoneChat.getInstance();
+        FlectonePlayer flectonePlayer = plugin.allPlayers.get(player.getName());
+        //replace
+        message = message.replace("<suffix>", flectonePlayer.getVaultSuffix());
+        message = message.replace("<prefix>", flectonePlayer.getVaultPrefix());
+        //update tab
+        flectonePlayer.setWorldColor(player.getWorld());
+        return message;
+    }
 }

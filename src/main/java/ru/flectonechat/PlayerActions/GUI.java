@@ -27,7 +27,6 @@ public class GUI implements Listener {
         //open ignore list menu
         if(event.getClickedInventory().getSize() == 18){
             UtilsGUI.ignoreListClick(event, flectonePlayer);
-            return;
         }
     }
 }

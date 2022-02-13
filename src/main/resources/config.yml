@@ -37,14 +37,14 @@ chat:
   global:
     enable: true
     condition: "!"
-    format: "<color_main><player>: "
+    format: "<prefix><color_main><player><suffix><color_main>: "
     prefix: "<color_main>[!] "
 
     message: "<color_text>"
 
   local:
     range: 100
-    format: "<color_main><player>: "
+    format: "<prefix><color_main><player><suffix><color_main>: "
     prefix: ""
 
     message: "<color_text>"

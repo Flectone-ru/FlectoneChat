@@ -4,6 +4,7 @@ main: ru.flectonechat.FlectoneChat
 api-version: 1.18
 authors: [ TheFaser ]
 description: Minecraft plugin
+softdepend: [Vault]
 commands:
   chatcolor:
     description: Set custom colors for you

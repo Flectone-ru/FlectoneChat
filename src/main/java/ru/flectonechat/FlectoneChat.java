@@ -1,5 +1,6 @@
 package ru.flectonechat;
 
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -7,12 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.flectonechat.Commands.*;
 import ru.flectonechat.PlayerActions.GUI;
-import ru.flectonechat.PlayerActions.ServerList;
-import ru.flectonechat.Tools.OnTabCompleter;
-
-import ru.flectonechat.PlayerActions.WorldChange;
 import ru.flectonechat.PlayerActions.JoinAndLeft;
+import ru.flectonechat.PlayerActions.ServerList;
+import ru.flectonechat.PlayerActions.WorldChange;
 import ru.flectonechat.Tools.FlectonePlayer;
+import ru.flectonechat.Tools.OnTabCompleter;
 import ru.flectonechat.Tools.Utils.UtilsMain;
 
 import java.io.File;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public final class FlectoneChat extends JavaPlugin {
+public class FlectoneChat extends JavaPlugin {
 
     public HashMap<String, FlectonePlayer> allPlayers = new HashMap<>();
 
@@ -33,6 +33,10 @@ public final class FlectoneChat extends JavaPlugin {
 
     public File themesFile;
     public FileConfiguration themesFileConfig;
+
+    private static Chat chat = null;
+
+    public static boolean vaultLoad;
 
     @Override
     public void onEnable() {
@@ -75,6 +79,14 @@ public final class FlectoneChat extends JavaPlugin {
         getCommand("ignore").setTabCompleter(new OnTabCompleter());
         //create flectone player for everyone
         createFlectonePlayers();
+        //check vault
+        setVaultLoad();
+        //load vault
+        if(vaultLoad){
+            setupChat();
+        } else {
+            getLogger().warning("Doesn't have plugin Vault");
+        }
         //start get logger
         getLogger().info("Start");
     }
@@ -147,5 +159,15 @@ public final class FlectoneChat extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    //setup vault chat
+    private boolean setupChat() {
+
+        chat = getServer().getServicesManager().getRegistration(Chat.class).getProvider();
+        return chat != null;
+    }
+
+    public static void setVaultLoad() {
+        FlectoneChat.vaultLoad = Bukkit.getPluginManager().getPlugin("Vault") != null;
     }
 }

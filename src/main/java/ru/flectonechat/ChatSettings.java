@@ -1,12 +1,12 @@
 package ru.flectonechat;
 
-import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
 import ru.flectonechat.Tools.Utils.UtilsMain;
 import ru.flectonechat.Tools.Utils.UtilsMessage;
 import ru.flectonechat.Tools.Utils.UtilsTell;
@@ -115,6 +115,8 @@ public class ChatSettings implements Listener {
             String formatMessage = UtilsMain.getConfigString("chat." + chatFormat + ".format");
             formatMessage = UtilsMessage.setPlayerColors(formatMessage, player.getName());
             formatMessage = UtilsMessage.replacePlayerName(formatMessage, eventPlayerName);
+            //replace placeholder <prefix> and <suffix>
+            formatMessage = UtilsMessage.replaceVaultPlaceholders(formatMessage, eventPlayer);
             //get format prefix
             String formatPrefix = UtilsMain.getConfigString("chat." + chatFormat + ".prefix");
             formatPrefix = UtilsMessage.setPlayerColors(formatPrefix, player.getName());

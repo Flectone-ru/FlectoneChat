@@ -1,5 +1,6 @@
 package ru.flectonechat.Tools.Utils;
 
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import ru.flectonechat.FlectoneChat;
@@ -63,5 +64,10 @@ public class UtilsMain {
         list.add(themeFirst);
         list.add(themeSecond);
         return list;
+    }
+    //set world color
+    public static void useSetWorldColor(Player player, World world){
+        FlectoneChat plugin = FlectoneChat.getInstance();
+        plugin.allPlayers.get(player.getName()).setWorldColor(world);
     }
 }

@@ -1,5 +1,6 @@
 package ru.flectonechat.Tools;
 
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.World;
 
 import org.bukkit.entity.Player;
@@ -83,6 +84,7 @@ public class FlectonePlayer {
             //set color
             worldColor = worldColor + player.getName();
             worldColor = UtilsMessage.formatString(worldColor);
+            worldColor = getVaultPrefix() + worldColor + getVaultSuffix();
             player.setPlayerListName(worldColor);
         }
     }
@@ -98,7 +100,6 @@ public class FlectonePlayer {
         }
 
     }
-
     public List<String> getThemesList(){
         return themesList;
     }
@@ -142,5 +143,21 @@ public class FlectonePlayer {
 
     public HashMap<Integer, Inventory> getIgnoreListInventories() {
         return ignoreListInventories;
+    }
+
+    public String getVaultPrefix() {
+        String prefix = "";
+        if(FlectoneChat.vaultLoad){
+            prefix = plugin.getServer().getServicesManager().getRegistration(Chat.class).getProvider().getPlayerPrefix(player);
+        }
+        return UtilsMessage.formatString(prefix);
+    }
+
+    public String getVaultSuffix() {
+        String suffix = "";
+        if(FlectoneChat.vaultLoad){
+            suffix = plugin.getServer().getServicesManager().getRegistration(Chat.class).getProvider().getPlayerSuffix(player);
+        }
+        return UtilsMessage.formatString(suffix);
     }
 }

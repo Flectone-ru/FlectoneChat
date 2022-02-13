@@ -19,7 +19,7 @@ public class IgnoreList implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //comand: /ignorelist
+        //command: /ignorelist
         Player eventPlayer = (Player) sender;
         String eventPlayerName = eventPlayer.getName();
         //checking for args but this if impossible
@@ -27,7 +27,7 @@ public class IgnoreList implements CommandExecutor {
             UtilsTell.sendMessageLanguage(eventPlayer, "ignorelist.usage");
             return true;
         }
-        //get flectone player and he ignore list
+        //get flectone player and he ignores list
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(eventPlayerName);
         List<String> ignoreList = plugin.ignoreFileConfig.getStringList(flectonePlayer.getPlayerUUID());

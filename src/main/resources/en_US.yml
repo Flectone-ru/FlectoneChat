@@ -32,10 +32,10 @@ tell:
     false: "#ff4e4eYou cannot write to yourself"
 
   sender:
-    message: "<color_main>✉Message to <player> » "
+    message: "<color_main>✉Message to <prefix><color_main><player><suffix><color_main> » "
 
   receiver:
-    message: "<color_main>✉Message from <player> » "
+    message: "<color_main>✉Message from <prefix><color_main><player><suffix><color_main> » "
 
   you-ignore: "#ff4e4eYou ignore this player"
   you-ignored: "#ff4e4eYou are ignored by this player"
