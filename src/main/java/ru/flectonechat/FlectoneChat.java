@@ -69,6 +69,7 @@ public class FlectoneChat extends JavaPlugin {
         getCommand("actions").setExecutor(new Actions());
         getCommand("ignore").setExecutor(new Ignore());
         getCommand("ignorelist").setExecutor(new IgnoreList());
+        getCommand("stream").setExecutor(new Stream());
         //set tab completer
         getCommand("chatcolor").setTabCompleter(new OnTabCompleter());
         getCommand("tell").setTabCompleter(new OnTabCompleter());
@@ -77,6 +78,7 @@ public class FlectoneChat extends JavaPlugin {
         getCommand("try").setTabCompleter(new OnTabCompleter());
         getCommand("flectonechat").setTabCompleter(new OnTabCompleter());
         getCommand("ignore").setTabCompleter(new OnTabCompleter());
+        getCommand("stream").setTabCompleter(new OnTabCompleter());
         //create flectone player for everyone
         createFlectonePlayers();
         //check vault

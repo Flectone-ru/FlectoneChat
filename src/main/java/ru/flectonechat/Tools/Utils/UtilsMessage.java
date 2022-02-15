@@ -35,7 +35,7 @@ public class UtilsMessage {
         if(!playerPing.isEmpty()){
             //get color
             String pingColor = UtilsMain.getConfigString("player_ping.color");
-            pingColor = UtilsMessage.setPlayerColors(pingColor, eventPlayer.getName());
+            pingColor = UtilsMessage.setPlayerColors(pingColor, playerName);
             //set color
             message = pingColor + ChatColor.stripColor(message);
             //replace old text component

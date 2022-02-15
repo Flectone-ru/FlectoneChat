@@ -8,100 +8,111 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import ru.flectonechat.FlectoneChat;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class OnTabCompleter implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         //create new list
-        List<String> array = new ArrayList<>();
-        //command /chatcolor
-        if(command.getName().equals("chatcolor")) chatcolorTabComplete(args, array);
-        //command /tell
-        if(command.getName().equals("tell")) tellTabComplete(args, array, "tell");
-        //command /reply
-        if(command.getName().equals("reply")) tellTabComplete(args, array, "r");
-        //command /try
-        if(command.getName().equals("try") || command.getName().equals("me")) array.add("(message)");
-        //command /flectonechat
-        if(command.getName().equals("flectonechat")) flectonechatArray(array, args);
-        //command /ignore
-        if(command.getName().equals("ignore")) ignoreTabComplete(array, args);
-        //sort list
-        Collections.sort(array);
-        return array;
+        List<String> wordsList = new ArrayList<>();
+        //command
+        switch(command.getName().replace(" ", "")){
+            case "chatcolor": chatcolorTabComplete(args, wordsList); break;
+            case "tell": tellTabComplete(args, wordsList, "tell"); break;
+            case "reply": tellTabComplete(args, wordsList, "r"); break;
+            case "me":
+            case "try ": wordsList.add("(message)"); break;
+            case "ignore": ignoreTabComplete(wordsList, args); break;
+            case "flectonechat": flectonechatArray(wordsList, args); break;
+            case "stream": streamTabComplete(args, wordsList); break;
+        }
+        Collections.sort(wordsList);
+        return wordsList;
     }
-
-    private void chatcolorTabComplete(String[] args, List<String> array){
+    //words for /chatcolor
+    private void chatcolorTabComplete(String[] args, List<String> wordsList){
         if(args.length == 1){
-            array.add("default");
-            array.add("#ffffff");
-            array.add("&b");
+            wordsList.add("default");
+            wordsList.add("#ffffff");
+            wordsList.add("&b");
         }
-        if(args.length == 2){
-            array.add("#dddddd");
-            array.add("&f");
+        if(args.length == 2) {
+            wordsList.add("#dddddd");
+            wordsList.add("&f");
         }
     }
-
-    private void tellTabComplete(String[] args, List<String> array, String commandName){
+    //words for /stream
+    private void streamTabComplete(String[] args, List<String> wordsList){
+        if(args.length == 1){
+            isStartsWith(args[0],"start", wordsList);
+            isStartsWith(args[0],"off", wordsList);
+        }
+        if(args.length > 1 && args[0].equals("start")){
+            wordsList.add("(url)");
+        }
+    }
+    //words for /tell
+    private void tellTabComplete(String[] args, List<String> wordsList, String commandName){
         if(commandName.equals("tell") && args.length == 1){
             for(Player player : Bukkit.getOnlinePlayers()){
-                array.add(player.getName());
+                wordsList.add(player.getName());
             }
         }
-        if(commandName.equals("tell") && args.length == 2 || commandName.equals("r") && args.length == 1){
-            array.add("(message)");
+        if(commandName.equals("tell") && args.length == 2 || commandName.equals("r") && args.length == 1) {
+            wordsList.add("(message)");
         }
     }
-
-    private void ignoreTabComplete(List<String> array, String[] args){
+    //words for /ignore
+    private void ignoreTabComplete(List<String> wordsList, String[] args){
         for(OfflinePlayer player : Bukkit.getOfflinePlayers()){
-            isStartsWith(args[0], player.getName(), array);
+            isStartsWith(args[0], player.getName(), wordsList);
         }
         for(Player player : Bukkit.getOnlinePlayers()){
             String playerName = player.getName().toLowerCase();
-            if(!array.contains(playerName)){
-                isStartsWith(args[0], player.getName(), array);
+            if(!wordsList.contains(playerName)){
+                isStartsWith(args[0], player.getName(), wordsList);
             }
         }
     }
-    private void flectonechatArray(List<String> array, String[] args){
+    //words for /flectonechat
+    private void flectonechatArray(List<String> wordsList, String[] args){
         FlectoneChat plugin = FlectoneChat.getInstance();
         if(args.length == 1){
-            isStartsWith(args[0], "reload", array);
-            isStartsWith(args[0], "config", array);
-            isStartsWith(args[0], "language", array);
+            isStartsWith(args[0], "reload", wordsList);
+            isStartsWith(args[0], "config", wordsList);
+            isStartsWith(args[0], "language", wordsList);
         }
         if(args.length == 2){
             if(args[0].equals("config")){
-                addKeysFile(plugin.getConfig().getKeys(true), array, args[1]);
+                addKeysFile(plugin.getConfig().getKeys(true), wordsList, args[1]);
             }
             if(args[0].equals("language")){
-                addKeysFile(plugin.language.getKeys(true), array, args[1]);
+                addKeysFile(plugin.language.getKeys(true), wordsList, args[1]);
             }
         }
-        if(args.length == 3){
-            array.add("set");
+        if(args.length == 3) {
+            wordsList.add("set");
         }
-        if(args.length == 4 && args[3].equals("")){
-            array.add("int");
-            array.add("string");
-            array.add("boolean");
+        if(args.length == 4){
+            wordsList.add("string");
+            wordsList.add("integer");
+            wordsList.add("boolean");
         }
-
     }
-    //if message starts with arg when add to array
-    private void isStartsWith(String arg, String string, List<String> array){
+    //if message starts with arg then add to words
+    private void isStartsWith(String arg, String string, List<String> wordsList){
         if(string.toLowerCase().startsWith(arg.toLowerCase())){
-            array.add(string);
+            wordsList.add(string);
         }
     }
-    //if keys starts with arg then add to array
-    private void addKeysFile(Set<String> keys, List<String> array, String arg){
+    //if keys starts with arg then add to words
+    private void addKeysFile(Set<String> keys, List<String> wordsList, String arg){
         for(String key : keys){
-            isStartsWith(arg, key, array);
+            isStartsWith(arg, key, wordsList);
         }
     }
 }

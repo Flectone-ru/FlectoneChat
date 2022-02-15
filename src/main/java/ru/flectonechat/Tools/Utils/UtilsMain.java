@@ -14,6 +14,10 @@ public class UtilsMain {
     public static String getConfigString(String stringName){
         return FlectoneChat.getInstance().getConfig().getString(stringName);
     }
+    //get list from language file
+    public static List<String> getLanguageList(String stringName){
+        return FlectoneChat.getInstance().language.getStringList(stringName);
+    }
     //get string from language file
     public static String getLanguageString(String stringName){
         return FlectoneChat.getInstance().language.getString(stringName);

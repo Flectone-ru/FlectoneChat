@@ -46,6 +46,10 @@ commands:
     description: Ignorelist
     usage: /ignorelist
 
+  stream:
+    description: Command for streamers
+    usage: /stream start/off
+
 permissions:
   flectonechat.reload:
     default: op

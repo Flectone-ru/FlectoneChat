@@ -143,45 +143,44 @@ public class UtilsGUI {
         HashMap<Integer, Inventory> ignoreListInventories = flectonePlayer.getIgnoreListInventories();
         //get inventory page from event
         int numberPage = getNumberPage(ignoreListInventories, event);
-        //if item for back inventory
-        if(clickedItem.getType() == Material.ARROW){
-            //get and open inventory
-            Inventory inventory = ignoreListInventories.get(numberPage-1);
-            eventPlayer.openInventory(inventory);
-            return;
-        }
-        //if item for next inventory
-        if(clickedItem.getType() == Material.SPECTRAL_ARROW){
-            //get and open inventory
-            Inventory inventory = ignoreListInventories.get(numberPage+1);
-            eventPlayer.openInventory(inventory);
-            return;
-        }
-        //if item for unignore
-        if(clickedItem.getType() == Material.PLAYER_HEAD){
-            //get ignored name from item
-            String ignoredPlayerName = clickedItem.getItemMeta().getDisplayName();
-            ignoredPlayerName = ignoredPlayerName.substring(1).substring(1);
-            //use command /ignore
-            Bukkit.dispatchCommand(event.getWhoClicked(), "ignore " + ignoredPlayerName);
-            //create new inventory menu
-            UtilsGUI.setIgnoreListInventory(flectonePlayer, ignoreListInventories, false);
-            //save new menu
-            flectonePlayer.setIgnoreListInventories(ignoreListInventories);
-            //get inventory from hashmap
-            Inventory inventory = ignoreListInventories.get(numberPage);
-            //if player ignore list null
-            if(flectonePlayer.getIgnoreList().size() == 0){
-                eventPlayer.closeInventory();
-                return;
+        //open inventory with arrow
+        switch(clickedItem.getType()){
+            case ARROW -> {
+                Inventory inventory = ignoreListInventories.get(numberPage-1);
+                eventPlayer.openInventory(inventory);
+                break;
             }
-            //open back inventory if this null
-            if(event.getSlot() == 0 && numberPage != 0 && inventory.getItem(1) == null){
-                eventPlayer.openInventory(ignoreListInventories.get(numberPage-1));
-                return;
+            case SPECTRAL_ARROW -> {
+                Inventory inventory = ignoreListInventories.get(numberPage+1);
+                eventPlayer.openInventory(inventory);
+                break;
             }
-            //open inventory
-            eventPlayer.openInventory(inventory);
+            case PLAYER_HEAD -> {
+                //get ignored name from item
+                String ignoredPlayerName = clickedItem.getItemMeta().getDisplayName();
+                ignoredPlayerName = ignoredPlayerName.substring(1).substring(1);
+                //use command /ignore
+                Bukkit.dispatchCommand(event.getWhoClicked(), "ignore " + ignoredPlayerName);
+                //create new inventory menu
+                UtilsGUI.setIgnoreListInventory(flectonePlayer, ignoreListInventories, false);
+                //save new menu
+                flectonePlayer.setIgnoreListInventories(ignoreListInventories);
+                //get inventory from hashmap
+                Inventory inventory = ignoreListInventories.get(numberPage);
+                //if player ignore list null
+                if(flectonePlayer.getIgnoreList().size() == 0){
+                    eventPlayer.closeInventory();
+                    return;
+                }
+                //open back inventory if this null
+                if(event.getSlot() == 0 && numberPage != 0 && inventory.getItem(1) == null){
+                    eventPlayer.openInventory(ignoreListInventories.get(numberPage-1));
+                    return;
+                }
+                //open inventory
+                eventPlayer.openInventory(inventory);
+                break;
+            }
         }
     }
     //get inventory page

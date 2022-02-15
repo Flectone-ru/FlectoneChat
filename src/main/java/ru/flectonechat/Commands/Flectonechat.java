@@ -4,7 +4,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.Utils.UtilsCommand;
 import ru.flectonechat.Tools.Utils.UtilsMessage;
@@ -16,7 +15,7 @@ public class Flectonechat implements CommandExecutor {
         //command: /flectonechat reload or config/language (key) set (value)
         Player eventPlayer = (Player) sender;
         //checking for args
-        if(UtilsCommand.checkArgs(args, 1) || !args[0].equals("reload") && UtilsCommand.checkArgs(args, 4)){
+        if(UtilsCommand.checkArgs(args, 1) || !args[0].equals("reload") && UtilsCommand.checkArgs(args, 5)){
             UtilsTell.sendMessageLanguage(eventPlayer, "flectonechat.usage");
             return true;
         }
@@ -28,22 +27,31 @@ public class Flectonechat implements CommandExecutor {
                 UtilsTell.sendMessageLanguage(eventPlayer, "flectonechat.usage");
                 return true;
             }
+            if(!args[3].equals("boolean") && !args[3].equals("integer") && !args[3].equals("string")){
+                UtilsTell.sendMessageLanguage(eventPlayer, "flectonechat.usage");
+                return true;
+            }
             //if (key) doesn't exist
             if(isExistsConfig(args[1]) && isExistsLanguage(args[1])){
                 UtilsTell.sendMessageLanguage(eventPlayer, "flectonechat.not-exists");
                 return true;
             }
+            Object object = getObject(args[3], args[4]);
+            sender.sendMessage(String.valueOf(object));
             //message for set
-            String message = UtilsMessage.createMessageFromArgs(args, 3, "");
-            //set and save config.yml
-            if(args[0].equals("config")){
-                plugin.getConfig().set(args[1], message);
-                plugin.saveConfig();
+            if(args.length > 5){
+                object = UtilsMessage.createMessageFromArgs(args, 4, "");
             }
-            //set and save "language".yml
-            if(args[0].equals("language")){
-                plugin.language.set(args[1], message);
-                plugin.saveLanguage();
+            //set and save file .yml
+            switch(args[0]){
+                case "config":
+                    plugin.getConfig().set(args[1], object);
+                    plugin.saveConfig();
+                    break;
+                case "language":
+                    plugin.language.set(args[1], object);
+                    plugin.saveLanguage();
+                    break;
             }
         }
         //reload plugin
@@ -54,7 +62,7 @@ public class Flectonechat implements CommandExecutor {
         return true;
     }
     //doesn't exist (key) in "language".yml
-    private boolean isExistsLanguage(String arg){
+    public static boolean isExistsLanguage(String arg){
         FlectoneChat plugin = FlectoneChat.getInstance();
         for(String key : plugin.language.getKeys(true)){
             if(key.equals(arg)) return false;
@@ -62,11 +70,19 @@ public class Flectonechat implements CommandExecutor {
         return true;
     }
     //doesn't exist (key) in config.yml
-    private boolean isExistsConfig(String arg){
+    public static boolean isExistsConfig(String arg){
         FlectoneChat plugin = FlectoneChat.getInstance();
         for(String key : plugin.getConfig().getKeys(true)){
             if(key.equals(arg)) return false;
         }
         return true;
+    }
+    //get object from string
+    private Object getObject(String objectName, String arg){
+        switch(objectName.toLowerCase()){
+            case "string": return arg;
+            case "boolean": return Boolean.parseBoolean(arg);
+            default: return Integer.valueOf(arg);
+        }
     }
 }

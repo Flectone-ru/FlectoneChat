@@ -79,3 +79,19 @@ ignorelist:
     name: "#ffff4eList of ignored players: "
     back-arrow: "&fBack"
     next-arrow: "&fNext"
+
+stream:
+  usage: "<color_main>Usage: <color_text>/stream start/off (url)/(urls)"
+  permission: "#ff4e4eYou don't have permission for stream"
+  vault-error: "#ff4e4eThis command requires the Vault plugin"
+  not-start: "#ff4e4eYou can't off stream because you don't started it"
+  offed: "<color_main>Thank you for streaming on our server!"
+  suffix: " #ff4e4e🔔"
+  not-off: "#ff4e4eYou can't start multiple streams at once"
+  start:
+    - "#ff4e4e🔔 <color_main>PING #ff4e4e🔔"
+    - "<color_main>-=-=-=-=-=-=-"
+    - "<color_text>Player <color_main><player> <color_text>launched stream"
+    - "<color_text>Links below and in https://discord.flectone.ru/"
+    - "<color_main>-=-=-=-=-=-=-"
+    - ""

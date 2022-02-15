@@ -1,5 +1,4 @@
 language: "en_US"
-test: "test"
 
 server:
   motd:

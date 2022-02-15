@@ -27,6 +27,7 @@ public class FlectonePlayer {
     private String playerUUID;
     //after message for player
     private String afterMessage = "not";
+    private String vaultSuffix = "";
 
     //ignore list from player
     private List<String> ignoreList = new ArrayList<>();
@@ -154,10 +155,15 @@ public class FlectonePlayer {
     }
 
     public String getVaultSuffix() {
-        String suffix = "";
         if(FlectoneChat.vaultLoad){
-            suffix = plugin.getServer().getServicesManager().getRegistration(Chat.class).getProvider().getPlayerSuffix(player);
+            this.vaultSuffix = plugin.getServer().getServicesManager().getRegistration(Chat.class).getProvider().getPlayerSuffix(player);
         }
-        return UtilsMessage.formatString(suffix);
+        return this.vaultSuffix;
+    }
+
+    public void setVaultSuffix(String vaultSuffix) {
+        plugin.getServer().getServicesManager().getRegistration(Chat.class).getProvider().setPlayerSuffix(player, vaultSuffix);
+        setWorldColor(player.getWorld());
+        this.vaultSuffix = vaultSuffix;
     }
 }
