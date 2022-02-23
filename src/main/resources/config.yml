@@ -1,25 +1,49 @@
+# This config of the FlectoneChat plugin
+# You can edit any line and change "true" to "false" and vice versa
+# Main placeholders: <player>, <message>, <color_main>, <color_text>
+#  ███████╗██╗     ███████╗ ██████╗████████╗ ██████╗ ███╗   ██╗███████╗
+#  ██╔════╝██║     ██╔════╝██╔════╝╚══██╔══╝██╔═══██╗████╗  ██║██╔════╝
+#  █████╗  ██║     █████╗  ██║        ██║   ██║   ██║██╔██╗ ██║█████╗
+#  ██╔══╝  ██║     ██╔══╝  ██║        ██║   ██║   ██║██║╚██╗██║██╔══╝
+#  ██║     ███████╗███████╗╚██████╗   ██║   ╚██████╔╝██║ ╚████║███████╗
+#  ╚═╝     ╚══════╝╚══════╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+#   ██████╗██╗  ██╗ █████╗ ████████╗
+#  ██╔════╝██║  ██║██╔══██╗╚══██╔══╝
+#  ██║     ███████║███████║   ██║
+#  ██║     ██╔══██║██╔══██║   ██║
+#  ╚██████╗██║  ██║██║  ██║   ██║
+#   ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
+# The plugin supports default colors (&f white) and hex colors (#6cc4ff blue)
+
+#Currently, supported "en_US" and "ru_RU"
 language: "en_US"
 
 server:
+  #Message at the server for player when he lists servers
   motd:
     enable: true
 
+  #Online number for server
   online:
     enable: true
     number: 1
 
 join:
+  #Message personally for player
   greeting:
     message:
       enable: true
 
+  #Custom join message
   message:
     enable: true
 
 left:
+  #Custom left message
   message:
     enable: true
 
+#Display tab the color of the players world
 world-color:
   enable: true
 
@@ -27,42 +51,63 @@ world-color:
   world_nether: "#ff4e4e"
   world_the_end: "#834eff"
 
-#Default player colors
+#Default player colors, because player maybe have custom colors
 color:
+  #His placeholder - <color_main>
   main: "#6cc4ff"
+
+  #His placeholder - <color_text>
   text: "#d9ecef"
 
 chat:
   global:
+    #if you want to have 2 chats on the server
     enable: true
+
+    #Symbol at which message send to global
     condition: "!"
+
     format: "<prefix><color_main><player><suffix><color_main>: "
     prefix: "<color_main>[!] "
 
+    #Color for message player
     message: "<color_text>"
 
   local:
+    #Distance local chat
     range: 100
+
     format: "<prefix><color_main><player><suffix><color_main>: "
     prefix: ""
 
+    #Color for message player
     message: "<color_text>"
 
+#If message contains player name
 player_ping:
   enable: true
   condition: "@"
+
+  #Ping color
   color: "<color_main>"
 
+#Custom tab
 tab-list:
   header:
     enable: true
 
+  footer:
+    enable: true
+
+#For command /send
 myself-message:
   enable: true
 
+#Custom command /me
 me:
   format: "<color_main>* <color_text><player> <message><color_main>*"
 
+#Custom command /try
 try:
   true:
     format: "#4eff52* <player> <message>* <chance>%"

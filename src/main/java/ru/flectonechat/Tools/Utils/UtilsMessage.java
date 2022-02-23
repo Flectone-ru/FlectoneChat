@@ -26,41 +26,40 @@ public class UtilsMessage {
     }
     //search player name in message
     public static TextComponent searchPingMessage(String message, Player eventPlayer, Player player){
-        //new text component
+
         TextComponent messageComponent = new TextComponent(TextComponent.fromLegacyText(message));
-        //get player name and player ping name
+
         String playerName = player.getName();
         String playerPing = checkPingPlayer(message);
-        //if ping exist
+
         if(!playerPing.isEmpty()){
-            //get color
+
             String pingColor = UtilsMain.getConfigString("player_ping.color");
             pingColor = UtilsMessage.setPlayerColors(pingColor, playerName);
             //set color
             message = pingColor + ChatColor.stripColor(message);
-            //replace old text component
+
             messageComponent = new TextComponent(TextComponent.fromLegacyText(message));
-            //get click message
+
             String clickMessage = UtilsMain.getLanguageString("click.message");
-            //replace placeholder <player>
             clickMessage = replacePlayerName(clickMessage, playerPing);
             clickMessage = setPlayerColors(clickMessage, playerName);
-            //set click event for message
+
             setClickEvent("/actions " + playerPing, clickMessage, messageComponent, eventPlayer, player);
         }
         return messageComponent;
     }
     //message contains player name or not
     public static String checkPingPlayer(String message){
-        //get ping condition
+
         String pingCondition = UtilsMain.getConfigString("player_ping.condition");
         boolean playerPingEnable = UtilsMain.getConfigBoolean("player_ping.enable");
-        //message to lower case;
+
         message = message.toLowerCase();
         //check this message
         for(Player player : Bukkit.getOnlinePlayers()){
             String playerName = player.getName();
-            //if message contains player name
+
             if(message.contains(playerName.toLowerCase()) && message.contains(pingCondition) && playerPingEnable){
                 return playerName;
             }
@@ -69,25 +68,24 @@ public class UtilsMessage {
     }
     //method for message if event player used /actions and wrote message
     public static boolean checkAfterMessage(Player eventPlayer, String[] args){
-        //get flectone player
+
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(eventPlayer.getName());
-        //after message not null
+
         if(!flectonePlayer.getAfterMessage().equals("not")){
-            //create message from args and add color for word
+
             String message = UtilsMessage.createMessageFromArgs(args, 0, "<color_text>");
-            //get player from his name
+
             Player player = Bukkit.getPlayer(flectonePlayer.getAfterMessage());
-            //clear after message
+
             flectonePlayer.setAfterMessage("not");
-            //if player left the game
+
             if(player == null){
                 UtilsTell.sendMessageLanguage(eventPlayer, "actions.no-player");
                 return true;
             }
-            //if message for myself
+
             if(eventPlayer == player){
-                //message for myself
                 UtilsTell.identicalPlayer(eventPlayer, message);
                 return true;
             }
@@ -103,11 +101,11 @@ public class UtilsMessage {
     }
     //set click event for text component
     public static void setClickEvent(String command, String text, TextComponent textComponent, Player eventPlayer, Player player){
-        //get boolean for myself message
-        boolean mySelfMessageEnable = UtilsMain.getConfigBoolean("myself_message.enable");
-        //format text
+
+        boolean mySelfMessageEnable = UtilsMain.getConfigBoolean("myself-message.enable");
+
         text = formatString(text);
-        //myself ping
+
         if(!mySelfMessageEnable && eventPlayer == player){
             return;
         }
@@ -117,25 +115,23 @@ public class UtilsMessage {
     }
     //get and format string from language
     public static String defaultLanguageString(String stringName, String playerName){
-        //get string
+
         String string = UtilsMain.getLanguageString(stringName);
-        //set color
         string = setPlayerColors(string, playerName);
-        //replace placeholder <player>
         string = replacePlayerName(string, playerName);
         return string;
     }
     //set color for message
     public static String setPlayerColors(String string, String playerName){
-        //get flectone player
+
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(playerName);
-        //get themes list
+
         List<String> themesList = flectonePlayer.getThemesList();
-        //replace placeholders <color_main> and <color_text>
+
         string = string.replace("<color_main>", themesList.get(0));
         string = string.replace("<color_text>", themesList.get(1));
-        //format string
+
         string = formatString(string);
         return string;
     }
@@ -166,10 +162,10 @@ public class UtilsMessage {
     }
     //replace placeholder <suffix> and <prefix>
     public static String replaceVaultPlaceholders(String message, Player player){
-        //get flectone player
+
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(player.getName());
-        //replace
+
         message = message.replace("<suffix>", flectonePlayer.getVaultSuffix());
         message = message.replace("<prefix>", flectonePlayer.getVaultPrefix());
         //update tab

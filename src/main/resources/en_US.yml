@@ -1,32 +1,71 @@
+# This config-message of the FlectoneChat plugin
+# You can edit any line and change "true" to "false" and vice versa
+# Main placeholders: <player>, <message>, <color_main>, <color_text>
+#  ███████╗██╗     ███████╗ ██████╗████████╗ ██████╗ ███╗   ██╗███████╗
+#  ██╔════╝██║     ██╔════╝██╔════╝╚══██╔══╝██╔═══██╗████╗  ██║██╔════╝
+#  █████╗  ██║     █████╗  ██║        ██║   ██║   ██║██╔██╗ ██║█████╗
+#  ██╔══╝  ██║     ██╔══╝  ██║        ██║   ██║   ██║██║╚██╗██║██╔══╝
+#  ██║     ███████╗███████╗╚██████╗   ██║   ╚██████╔╝██║ ╚████║███████╗
+#  ╚═╝     ╚══════╝╚══════╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+#   ██████╗██╗  ██╗ █████╗ ████████╗
+#  ██╔════╝██║  ██║██╔══██╗╚══██╔══╝
+#  ██║     ███████║███████║   ██║
+#  ██║     ██╔══██║██╔══██║   ██║
+#  ╚██████╗██║  ██║██║  ██║   ██║
+#   ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
+# The plugin supports default colors (&f white) and hex colors (#6cc4ff blue)
+# If you have any questions / errors, please about it
+# https://github.com/TheFaser/FlectoneChat
 
+#Server description
 server-motd-message: "#6cc4ffThis test message from FlectoneChat"
 
+#Custom join message
 join:
+  #Message personally for player
   greeting:
     message: "#4eff52<player>, have a good game"
 
   message: "<color_main><player> joined the game"
 
+#Custom left message
 left:
   message: "<color_main><player> left the game"
 
+#If enable global and don't have players in range
 chat:
   no-recipients: "#ff4e4eNobody heard you"
 
+#Message for click in the chat on player name
 click:
   message: "<color_text>Actions menu with <player>"
 
+#Custom tab
 tab-list:
-  header: "\n☻\n"
+  #Top part
+  header: "\n<color_main>☻\n"
+  #Bottom part
+  footer: "\n<color_main>FlectoneChat\n"
 
+#   ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗
+#  ██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝
+#  ██║     ██║   ██║██╔████╔██║██╔████╔██║███████║██╔██╗ ██║██║  ██║███████╗
+#  ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██║╚██╗██║██║  ██║╚════██║
+#  ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║ ╚████║██████╔╝███████║
+#   ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝
+
+#Command /chatcolor
+#The player can set custom colors for all plugin messages (themes.yml file)
 chatcolor:
   usage: "<color_main>Usage: <color_text>/chatcolor (main color/default) (text color)"
   success: "#6cc4ffYou color: <color_main>Main <color_text>Text"
 
+#Command /tell
 tell:
   usage: "<color_main>Usage: <color_text>/tell (player) (message)"
   no-player: "#ff4e4eThe player is not on the server"
 
+  #If enable myself message in config.yml
   myself:
     true: "<color_main>✉Note » "
     false: "#ff4e4eYou cannot write to yourself"
@@ -40,31 +79,53 @@ tell:
   you-ignore: "#ff4e4eYou ignore this player"
   you-ignored: "#ff4e4eYou are ignored by this player"
 
+#Command /reply
 reply:
   usage: "<color_main>Usage: <color_text>/r (message)"
-  no-player: "#ff4e4eThe player is not on the server"
-  no-player_answer: "#ff4e4eNo one to answer"
 
+  #Sender not online
+  no-player: "#ff4e4eThe player is not on the server"
+
+  #Player don't have senders
+  no-player-answer: "#ff4e4eNo one to answer"
+
+#Command /me
 me:
   usage: "<color_main>Usage: <color_text>/me (message)"
 
+#Command /try
+#The player can take an action, and he will be given message chance to perform it
 try:
   usage: "<color_main>Usage: <color_text>/try (message)"
 
+#Command /flectonechat
+#Allows you to edit the plugin directly on the server, without going into the server files
 flectonechat:
   usage: "<color_main>Usage: <color_text>/flectonechat reload/config/language"
+
+  #If player entered command args incorrectly
   not-exists: "#ff4e4eEnter the correct line name"
+
   message: "<color_main>Plugin successfully reloaded!"
 
+#Command /actions
+#Open GUI actions player
 actions:
-  name: "#ffff4eActions with <player>"
   usage: "<color_main>Usage: <color_text>/actions (player)"
   no-player: "#ff4e4eThe player is not on the server"
+
+  #GUI name
+  name: "#ffff4eActions with <player>"
+
+  #Custom item
   head:
     message: "#ffff4eMessage for <player>"
     ignore: "#ffff4eUse /ignore <player>"
+
+  #Message which send when player click head-message
   after-message: "#ffff4eWrite a message to the chat for <player>"
 
+#Command /ignore
 ignore:
   usage: "<color_main>Usage: <color_text>/ignore (player)"
   myself: "#ff4e4eYou can't ignore yourself"
@@ -72,22 +133,33 @@ ignore:
   un-mute: "#4eff52You unignore <player>"
   mute: "#ff4e4eYou ignore <player>"
 
+#Command /ignorelist
 ignorelist:
   usage: "<color_main>Usage: <color_text>/ignorelist"
   empty: "#ff4e4eYou don't ignore anyone"
+
+  #GUI for command
   inventory:
     name: "#ffff4eList of ignored players: "
     back-arrow: "&fBack"
     next-arrow: "&fNext"
 
+#Command /stream
+#Creates an alert that the player is streaming
+#Player is given a custom suffix to indicate who is streaming
 stream:
   usage: "<color_main>Usage: <color_text>/stream start/off (url)/(urls)"
   permission: "#ff4e4eYou don't have permission for stream"
+
+  #If vault don't install
   vault-error: "#ff4e4eThis command requires the Vault plugin"
+
   not-start: "#ff4e4eYou can't off stream because you don't started it"
   offed: "<color_main>Thank you for streaming on our server!"
-  suffix: " #ff4e4e🔔"
   not-off: "#ff4e4eYou can't start multiple streams at once"
+  suffix: " #ff4e4e🔔"
+
+  #You can add lines or reduce their number
   start:
     - "#ff4e4e🔔 <color_main>PING #ff4e4e🔔"
     - "<color_main>-=-=-=-=-=-=-"

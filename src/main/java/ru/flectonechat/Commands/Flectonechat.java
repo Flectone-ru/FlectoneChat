@@ -6,12 +6,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.Utils.UtilsCommand;
+import ru.flectonechat.Tools.Utils.UtilsMain;
 import ru.flectonechat.Tools.Utils.UtilsMessage;
 import ru.flectonechat.Tools.Utils.UtilsTell;
 
 public class Flectonechat implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(!UtilsMain.senderIsPlayer(sender)) return true;
         //command: /flectonechat reload or config/language (key) set (value)
         Player eventPlayer = (Player) sender;
         //checking for args
@@ -37,7 +39,6 @@ public class Flectonechat implements CommandExecutor {
                 return true;
             }
             Object object = getObject(args[3], args[4]);
-            sender.sendMessage(String.valueOf(object));
             //message for set
             if(args.length > 5){
                 object = UtilsMessage.createMessageFromArgs(args, 4, "");
@@ -54,10 +55,10 @@ public class Flectonechat implements CommandExecutor {
                     break;
             }
         }
-        //reload plugin
+
         plugin.reloadConfig();
         plugin.loadLanguage();
-        //send success message
+
         UtilsTell.sendMessageLanguage(eventPlayer, "flectonechat.message");
         return true;
     }

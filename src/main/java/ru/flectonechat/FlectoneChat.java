@@ -40,6 +40,7 @@ public class FlectoneChat extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Metrics metrics = new Metrics(this, 14445);
         //get plugin
         FlectoneChat.instance = this;
         //create config.yml
@@ -101,7 +102,7 @@ public class FlectoneChat extends JavaPlugin {
     //check file exist
     public void checkFile(File file){
         if(!file.exists()){
-            //if file name config
+
             if(file.getName().contains("config")){
                 getConfig().options().copyDefaults();
                 saveDefaultConfig();
@@ -116,13 +117,13 @@ public class FlectoneChat extends JavaPlugin {
     }
     //create "language".yml
     public void loadLanguage(){
-        //get all langs
+
         List<String> defaultLangFiles = Arrays.asList("en_US", "ru_RU");
         //create files for langs
         for(String lang : defaultLangFiles){
             createFile(lang);
         }
-        //get lang name
+
         String getLanguageName = getConfig().getString("language");
         //load language
         try {
@@ -151,11 +152,12 @@ public class FlectoneChat extends JavaPlugin {
     }
     //save "language".yml
     public void saveLanguage(){
-        //get lang name
+
         String languageName = getConfig().getString("language");
         File languageFile = createFile(languageName);
+
         saveResource(languageName + ".yml", true);
-        //save
+
         try {
             language.save(languageFile);
         } catch (IOException e) {

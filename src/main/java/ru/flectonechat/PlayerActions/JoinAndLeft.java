@@ -19,53 +19,56 @@ public class JoinAndLeft implements Listener {
 
     @EventHandler
     public void PlayerJoin(PlayerJoinEvent event){
-        //event player
+
         Player eventPlayer = event.getPlayer();
         //create flectone player for player
         UtilsMain.createFlectonePlayer(eventPlayer);
         //set tab list header
-        checkTabListHeader(eventPlayer);
-        //set join message
+        checkTabList(eventPlayer, "header");
+        checkTabList(eventPlayer, "footer");
+
         if(UtilsMain.getConfigBoolean("join.message.enable")){
             //message for console
             plugin.getLogger().info(event.getJoinMessage());
             event.setJoinMessage("");
-            //send message
+
             sendMessage("join.message", eventPlayer.getName());
         }
-        //set greeting message
+
         if(UtilsMain.getConfigBoolean("join.greeting.message.enable")){
-            //get greeting message
+
             String message = UtilsMessage.defaultLanguageString("join.greeting.message", eventPlayer.getName());
-            //send message
+
             UtilsTell.sendMessage(eventPlayer, message);
         }
     }
 
     @EventHandler
     public void PlayerLeft(PlayerQuitEvent event){
-        //event player
+
         Player eventPlayer = event.getPlayer();
-        //set left message
+
         if(UtilsMain.getConfigBoolean("left.message.enable")){
             //message for console
             plugin.getLogger().info(event.getQuitMessage());
             event.setQuitMessage("");
-            //send message
+
             sendMessage("left.message", eventPlayer.getName());
         }
-        //remove flectone player for player
+
         plugin.allPlayers.remove(eventPlayer.getName());
     }
-    //check and set tab list header
-    private static void checkTabListHeader(Player player){
-        //get boolean
-        if(UtilsMain.getConfigBoolean("tab-list.header" + ".enable")){
-            //get string
-            String tabListHeader = UtilsMain.getLanguageString("tab-list.header");
-            tabListHeader = UtilsMessage.setPlayerColors(tabListHeader, player.getName());
-            //set header
-            player.setPlayerListHeader(tabListHeader);
+    //check and set tab list
+    public static void checkTabList(Player player, String tabListName){
+        String config = "tab-list." + tabListName;
+
+        if(UtilsMain.getConfigBoolean(config + ".enable")){
+
+            String tabList = UtilsMain.getLanguageString(config);
+            tabList = UtilsMessage.setPlayerColors(tabList, player.getName());
+            //set header and footer
+            if(tabListName.equals("header")) player.setPlayerListHeader(tabList) ;
+            if(tabListName.equals("footer")) player.setPlayerListFooter(tabList);
         }
     }
     //send message
@@ -75,7 +78,7 @@ public class JoinAndLeft implements Listener {
             String message = UtilsMain.getLanguageString(stringName);
             message = UtilsMessage.replacePlayerName(message, eventPlayerName);
             message = UtilsMessage.setPlayerColors(message, player.getName());
-            //send message
+
             UtilsTell.sendMessage(player, message);
         }
     }

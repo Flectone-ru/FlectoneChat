@@ -15,6 +15,7 @@ import java.util.Random;
 public class Try implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(!UtilsMain.senderIsPlayer(sender)) return true;
         //command: /try (message)
         Player eventPlayer = (Player) sender;
         //checking for args
@@ -22,22 +23,22 @@ public class Try implements CommandExecutor {
             UtilsTell.sendMessageLanguage(eventPlayer, "try.usage");
             return true;
         }
-        //create random
+
         Random random = new Random();
         int intRandom = random.nextInt(101);
         String intRandomString = String.valueOf(intRandom);
-        //get result from random
+
         String getTryResult = String.valueOf(checkTry(intRandom));
-        //get format
+
         String formatMessage = UtilsMain.getConfigString("try." + getTryResult + ".format");
         formatMessage = UtilsMessage.formatString(formatMessage);
-        //replace placeholder <player>
+
         formatMessage = UtilsMessage.replacePlayerName(formatMessage, eventPlayer.getName());
         //create message from args and add color for word
         String message = UtilsMessage.createMessageFromArgs(args, 0, "");
-        //replace placeholder <message>
+
         formatMessage = formatMessage.replace("<message>", message).replace("<chance>", intRandomString);
-        //send message
+
         UtilsTell.sendEveryoneMessage(formatMessage, eventPlayer);
         return true;
     }

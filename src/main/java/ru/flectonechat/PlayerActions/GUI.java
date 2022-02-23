@@ -12,12 +12,12 @@ public class GUI implements Listener {
 
     @EventHandler
     public void inventoryClick(InventoryClickEvent event){
-        //get event player name
+
         String eventPlayerName = event.getWhoClicked().getName();
-        //get flectone player
+
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(eventPlayerName);
-        //check null item
+
         if(event.getCurrentItem() == null) return;
         //open "actions" inventory
         if(event.getClickedInventory() == flectonePlayer.getLastClickedInventory()){

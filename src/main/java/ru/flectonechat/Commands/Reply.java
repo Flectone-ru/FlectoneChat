@@ -9,12 +9,14 @@ import org.bukkit.entity.Player;
 import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.FlectonePlayer;
 import ru.flectonechat.Tools.Utils.UtilsCommand;
+import ru.flectonechat.Tools.Utils.UtilsMain;
 import ru.flectonechat.Tools.Utils.UtilsMessage;
 import ru.flectonechat.Tools.Utils.UtilsTell;
 
 public class Reply implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(!UtilsMain.senderIsPlayer(sender)) return true;
         //command: /r (message)
         Player eventPlayer = (Player) sender;
         String eventPlayerName = eventPlayer.getName();
@@ -23,7 +25,7 @@ public class Reply implements CommandExecutor {
             UtilsTell.sendMessageLanguage(eventPlayer, "reply.usage");
             return true;
         }
-        //get flectone player and his last sender
+
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(eventPlayerName);
         String lastSenderName = flectonePlayer.getLastSender();
@@ -32,9 +34,9 @@ public class Reply implements CommandExecutor {
             UtilsTell.sendMessageLanguage(eventPlayer, "reply.no-player-answer");
             return true;
         }
-        //get player from name
+
         Player lastSender = Bukkit.getPlayer(lastSenderName);
-        //if last sender left the game
+
         if(lastSender == null){
             UtilsTell.sendMessageLanguage(eventPlayer, "reply.no-player");
             return true;

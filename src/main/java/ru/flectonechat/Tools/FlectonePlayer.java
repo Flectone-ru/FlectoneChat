@@ -2,7 +2,6 @@ package ru.flectonechat.Tools;
 
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.World;
-
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import ru.flectonechat.FlectoneChat;
@@ -78,9 +77,13 @@ public class FlectonePlayer {
     public void setWorldColor(World world){
         //get boolean
         if(UtilsMain.getConfigBoolean("world-color.enable")){
-            //get player name
-            String eventWorldName = world.getName();
-            //get color
+
+            String eventWorldName = "world";
+            switch(world.getEnvironment()){
+                case NETHER -> eventWorldName += "_nether";
+                case THE_END -> eventWorldName += "_the_end";
+            }
+
             String worldColor = UtilsMain.getConfigString("world-color." + eventWorldName);
             //set color
             worldColor = worldColor + player.getName();
@@ -155,6 +158,7 @@ public class FlectonePlayer {
     }
 
     public String getVaultSuffix() {
+        this.vaultSuffix = "";
         if(FlectoneChat.vaultLoad){
             this.vaultSuffix = plugin.getServer().getServicesManager().getRegistration(Chat.class).getProvider().getPlayerSuffix(player);
         }

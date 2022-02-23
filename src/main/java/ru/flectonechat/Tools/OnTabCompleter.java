@@ -23,7 +23,7 @@ public class OnTabCompleter implements TabCompleter {
         switch(command.getName().replace(" ", "")){
             case "chatcolor": chatcolorTabComplete(args, wordsList); break;
             case "tell": tellTabComplete(args, wordsList, "tell"); break;
-            case "reply": tellTabComplete(args, wordsList, "r"); break;
+            case "reply":
             case "me":
             case "try ": wordsList.add("(message)"); break;
             case "ignore": ignoreTabComplete(wordsList, args); break;
@@ -57,12 +57,12 @@ public class OnTabCompleter implements TabCompleter {
     }
     //words for /tell
     private void tellTabComplete(String[] args, List<String> wordsList, String commandName){
-        if(commandName.equals("tell") && args.length == 1){
+        if(args.length == 1){
             for(Player player : Bukkit.getOnlinePlayers()){
                 wordsList.add(player.getName());
             }
         }
-        if(commandName.equals("tell") && args.length == 2 || commandName.equals("r") && args.length == 1) {
+        if(args.length == 2) {
             wordsList.add("(message)");
         }
     }

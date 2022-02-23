@@ -8,18 +8,12 @@ version = '3.0'
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
-    maven {
-        name = 'spigotmc-repo'
-        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-    }
-    maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://oss.sonatype.org/content/groups/public/' }
 }
 
 dependencies {
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
     compileOnly 'org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT'
 }
 

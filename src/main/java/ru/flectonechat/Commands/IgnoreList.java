@@ -10,6 +10,7 @@ import ru.flectonechat.FlectoneChat;
 import ru.flectonechat.Tools.FlectonePlayer;
 import ru.flectonechat.Tools.Utils.UtilsCommand;
 import ru.flectonechat.Tools.Utils.UtilsGUI;
+import ru.flectonechat.Tools.Utils.UtilsMain;
 import ru.flectonechat.Tools.Utils.UtilsTell;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class IgnoreList implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(!UtilsMain.senderIsPlayer(sender)) return true;
         //command: /ignorelist
         Player eventPlayer = (Player) sender;
         String eventPlayerName = eventPlayer.getName();
@@ -27,7 +29,7 @@ public class IgnoreList implements CommandExecutor {
             UtilsTell.sendMessageLanguage(eventPlayer, "ignorelist.usage");
             return true;
         }
-        //get flectone player and he ignores list
+
         FlectoneChat plugin = FlectoneChat.getInstance();
         FlectonePlayer flectonePlayer = plugin.allPlayers.get(eventPlayerName);
         List<String> ignoreList = plugin.ignoreFileConfig.getStringList(flectonePlayer.getPlayerUUID());

@@ -17,6 +17,7 @@ import java.util.List;
 public class Stream implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(!UtilsMain.senderIsPlayer(sender)) return true;
         Player eventPlayer = (Player) sender;
         //checking for args
         if(UtilsCommand.checkArgs(args, 1) || (args.length == 1 && args[0].equals("start"))){
@@ -33,42 +34,41 @@ public class Stream implements CommandExecutor {
             UtilsTell.sendMessageLanguage(eventPlayer, "stream.vault-error");
             return true;
         }
-        //get flectone player
+
         FlectonePlayer flectonePlayer = FlectoneChat.getInstance().allPlayers.get(eventPlayer.getName());
-        switch(args[0]){
-            case "off":
+        switch (args[0]) {
+            case "off" -> {
                 //if player use command and have not stream
-                if(!checkPlayerSuffix(flectonePlayer.getVaultSuffix())){
+                if (!checkPlayerSuffix(flectonePlayer.getVaultSuffix())) {
                     UtilsTell.sendMessageLanguage(eventPlayer, "stream.not-start");
                     return true;
                 }
-                //clear suffix and send message
+
                 flectonePlayer.setVaultSuffix("");
                 UtilsTell.sendMessageLanguage(eventPlayer, "stream.offed");
                 return true;
-            case "start":
+            }
+            case "start" -> {
                 //if player use command and have stream
-                if(checkPlayerSuffix(flectonePlayer.getVaultSuffix())){
+                if (checkPlayerSuffix(flectonePlayer.getVaultSuffix())) {
                     UtilsTell.sendMessageLanguage(eventPlayer, "stream.not-off");
                     return true;
                 }
-                //set suffix
+
                 String streamSuffix = UtilsMain.getLanguageString("stream.suffix");
                 flectonePlayer.setVaultSuffix(UtilsMessage.formatString(streamSuffix));
                 //create list and send
                 List<String> formatList = UtilsMain.getLanguageList("stream.start");
-                addArgsToList(args, 1, formatList);
+                addArgsToList(args, formatList);
                 sendMessage(formatList, eventPlayer.getName());
                 return true;
+            }
         }
         return true;
     }
-    //check player suffix
+
     private boolean checkPlayerSuffix(String playerSuffix){
-        if(playerSuffix == null || playerSuffix.equals("")){
-            return false;
-        }
-        return true;
+        return playerSuffix != null && !playerSuffix.equals("");
     }
     //send finished message
     private void sendMessage(List<String> list, String eventPlayerName){
@@ -87,9 +87,9 @@ public class Stream implements CommandExecutor {
         }
         return formatList;
     }
-    //add string args to list
-    private void addArgsToList(String[] args, int firstArg, List<String> formatList){
-        for(int x = firstArg; x < args.length; x++){
+
+    private void addArgsToList(String[] args, List<String> formatList){
+        for(int x = 1; x < args.length; x++){
             String string = "<color_text>" + args[x];
             formatList.add(string);
         }
